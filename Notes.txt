@@ -1,0 +1,121 @@
+В проекте создадим папку BackEnd и в ней:
+	dotnet new sln --name ProjectName
+	dotnet new webapi -o API
+	dotnet sln add API
+	dotnet new classlib -o Core
+	dotnet new classlib -o Infrastructure
+	dotnet sln add Core
+	dotnet sln add Infrastructure
+	dotnet add reference ..\Core\ (из папки Infrastructure)
+	dotnet add reference ..\Core\ (из папки Api)
+	dotnet add reference ..\Infrastructure\ (из папки Api)
+
+API - все, что непосредственно касается логики работы API:
+	Controllers
+	Mappers
+	Middleware
+	И другое, что может описывать *логику*.
+Core - сущности и интерфейсы, с которыми мы работаем
+	Entities 
+	Interfaces
+	Specifications
+	И другие *объекты*
+Infrastructure - все, что непосредственно касается базы данных.
+	Migrations
+	SeedData
+	Repositories
+	И другое, что может потребоваться для работы с *базой данных*
+
+Установка EntityFrameworkCore.Sqlite:
+Проверяем версию .net:
+	dotnet --info
+Через nuget установить версию EntityFrameworkCore.Sqlite, которая равна версии .net.
+Устанавливаем в API и Infrastructure.
+
+Устанавливаем dotnet-ef той же версии, что и .net.
+Устанавливаем в API и Infrastructure.
+
+Устанавливаем Microsoft.EntityFrameworkCore.Design той же версии, что и .net.
+Устанавливаем в API и Infrastructure.
+
+В Core создаем папку Entities и добавляем туда BaseEntity, который содержит только Id,
+а затем другие сущности, которые будут использоваться в БД.
+
+В Infrastructure создаем папку Data.
+Создаем ShelterContext.cs.
+Унаследуемся от DbContext. 
+Конструктор: 
+	public ShelterContext(DbContextOptions<ShelterContext> options) : base(options)
+        {
+        }
+Также обязательно добавить пустой конструтор, иначе будут ошибки при создании migration:
+	public ShelterContext() : base() { }
+Его нужно поместить в начало.
+
+Должны указать, что DbContextOptions типа ShelterContext.
+
+Добавим DbSet для необходимых коллекций:
+        public DbSet<Animal>? Animals {get; set;}
+        public DbSet<Location>? Locations {get; set;}
+        public DbSet<AnimalType>? AnimalTypes {get; set;}
+
+В appsettings.Development.json *под* полем Logging добавим:
+  "ConnectionStrings": {
+    "DefaultConnection" : "Data source=kindShelter.db"
+  }
+Для конфигурации Sqlite.
+
+Зарегистрируем сервис: 
+
+string? ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+services.AddDbContext<ShelterContext>(
+      dbcontextOptions => dbcontextOptions.UseSqlite(ConnectionString), 
+      b => b.MigrationsAssembly("Infrastructure")
+);
+
+b => b.MigrationsAssembly("Infrastructure") 
+Указывает, куда будут помещаться все migrations.
+
+Далее из папки Infrastructure:
+	dotnet ef --startup-project ..\API\ migrations add InitialCreate -o Data/Migraions
+Обязательно надо указать --startup-project ..\API\, так как именно в этом проекте регистрируется зависимость.
+Чтобы удалить migrations
+	dotnet ef --startup-project ..\API\ migrations remove.
+
+Также из папки Infrastructure можно создать базу данных:
+	dotnet ef --startup-project ..\API\ database update
+
+В Infrastructure добавим папку DatabaseConfiguration в ней создадим конфигурации на каждый сет:
+	AnimalsSetConfiguration.cs
+	AnimalTypesSetConfiguration.cs
+ 	LocationSetConfiguration.cs
+Пример AnimalsSetConfiguration.cs:
+	
+    public class AnimalsSetConfiguration : IEntityTypeConfiguration<Animal>
+    {
+        public void Configure(EntityTypeBuilder<Animal> builder)
+        {
+            builder.Property(a => a.Id).IsRequired();
+            builder.Property(a => a.Name).IsRequired();
+            builder.Property(a => a.Age).IsRequired();
+            builder.Property(a => a.Color).IsRequired();
+            builder.Property(a => a.Gender).IsRequired();
+            builder.Property(a => a.PictureUrl).IsRequired();
+            builder.HasOne(a => a.Location).WithMany().HasForeignKey(a => a.LocationId);
+            builder.HasOne(a => a.AnimalType).WithMany().HasForeignKey(a => a.AnimalTypeId);
+        }
+    }
+
+Для применения конфигураций нужно перезаписать метод OnModelCreating:
+
+      protected override void OnModelCreating(ModelBuilder modelBuilder)
+      {
+          base.OnModelCreating(modelBuilder);
+          modelBuilder.ApplyConfiguration(new AnimalsSetConfiguration());
+          modelBuilder.ApplyConfiguration(new AnimalTypesSetConfiguration());
+          modelBuilder.ApplyConfiguration(new LocationSetConfiguration());
+      }
+
+Далее 
+
+
