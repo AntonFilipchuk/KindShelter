@@ -16,20 +16,20 @@ namespace Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<Animal>> GetAnimals()
+        public async Task<IEnumerable<Pet>> GetAnimals()
         {
-            return await _context.Animals.Include(a => a.BreedType).ToListAsync();
+            return await _context.Pets.Include(a => a.Breed).ToListAsync();
             //return await _context.BreedTypes.Include(bt => bt.Animals).ToListAsync();
         }
 
-        public async Task<IEnumerable<BreedType>> GetBreeds()
+        public async Task<IEnumerable<Breed>> GetBreeds()
         {
-             return await _context.BreedTypes.Include(bt => bt.Animals).ToListAsync();
+             return await _context.Breeds.Include(bt => bt.Animal).ToListAsync();
         }
 
-        public async Task<IEnumerable<Breeds>> GetBreedsCollection()
+        public async Task<IEnumerable<Animal>> GetBreedsCollection()
         {
-            return await _context.BreedsCollection.Include(b => b.BreedTypesCollection).ToListAsync();
+            return await _context.Animals.Include(b => b.Breeds).ToListAsync();
         }
     }
 }

@@ -11,5 +11,9 @@ namespace Core.Enitites
         public string? Street {get; init;}
         public int? House {get; init;}
         public int? FlatNumber {get; init;}
+
+        //Navigational Properties
+        public Pet? Pet {get; set;}
+        public int PetId {get;set;}
     }
 }

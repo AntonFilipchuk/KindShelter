@@ -6,13 +6,13 @@ using System.Threading.Tasks;
 
 namespace Core.Enitites.Breeds
 {
-    public record BreedType : BaseEntity
+    public record Breed : BaseEntity
     {
         public string BreedName { get; init; } = string.Empty;
-        public IEnumerable<Animal> Animals { get; init; } = new List<Animal>();
+        public IEnumerable<Pet>? Pets { get; init; }
 
         //Navigation Properties
-        public Breeds BreedsCollection { get; init; }
-        public int BreedsCollectionId { get; init; }
+        public Animal Animal { get; init; } = new Animal();
+        public int AnimalId { get; init; }
     }
 }

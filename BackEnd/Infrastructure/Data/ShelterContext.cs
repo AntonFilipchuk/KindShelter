@@ -16,19 +16,18 @@ namespace Infrastructure.Data
 
         public ShelterContext(DbContextOptions<ShelterContext> options) : base(options) { }
 
-        public DbSet<Animal>? Animals { get; set; }
+        public DbSet<Pet>? Pets { get; set; }
         public DbSet<Location>? Locations { get; set; }
-        public DbSet<Breeds>? BreedsCollection { get; set; }
-        public DbSet<BreedType>? BreedTypes {get; set;}
+        public DbSet<Animal>? Animals { get; set; }
+        public DbSet<Breed>? Breeds {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             base.OnModelCreating(modelBuilder);
-            modelBuilder.ApplyConfiguration(new AnimalsSetConfiguration());
-            modelBuilder.ApplyConfiguration(new BreedsCollectionConfiguration());
-            modelBuilder.ApplyConfiguration(new BreedTypesConfiguration());
-
-            //modelBuilder.ApplyConfiguration(new LocationSetConfiguration());
+            modelBuilder.ApplyConfiguration(new PetConfiguration());
+            modelBuilder.ApplyConfiguration(new AnimalConfiguration());
+            modelBuilder.ApplyConfiguration(new BreedConfiguration());
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
         }
     }
 }

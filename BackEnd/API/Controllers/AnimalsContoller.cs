@@ -20,19 +20,19 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Animal>>> GetAnimals()
+        public async Task<ActionResult<IEnumerable<Pet>>> GetAnimals()
         {
             return Ok(await _repository.GetAnimals());
         }
 
         [HttpGet("breeds")]
-        public async Task<ActionResult<IEnumerable<BreedType>>> GetBreeds()
+        public async Task<ActionResult<IEnumerable<Breed>>> GetBreeds()
         {
             return Ok(await _repository.GetBreedsCollection());
         }
 
         [HttpGet("breedTypes")]
-        public async Task<ActionResult<IEnumerable<BreedType>>> GetBreedTypes()
+        public async Task<ActionResult<IEnumerable<Breed>>> GetBreedTypes()
         {
             return Ok(await _repository.GetBreeds());
         }

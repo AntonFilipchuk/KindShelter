@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DatabaseConfiguration
 {
-    public class LocationSetConfiguration : IEntityTypeConfiguration<Location>
+    public class LocationConfiguration : IEntityTypeConfiguration<Location>
     {
         public void Configure(EntityTypeBuilder<Location> builder)
         {

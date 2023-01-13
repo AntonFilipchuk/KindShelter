@@ -6,7 +6,7 @@ using Core.Enitites.Breeds;
 
 namespace Core.Enitites
 {
-    public record Animal : BaseEntity
+    public record Pet : BaseEntity
     {
         public string Name { get; init; } = string.Empty;
         public bool? HasVaccines { get; init; }
@@ -15,7 +15,10 @@ namespace Core.Enitites
         public string Gender { get; init; } = string.Empty;
         public string Color { get; init; } = string.Empty;
 
-        public BreedType BreedType { get; init; }
-        public int BreedTypeId { get; init; }
+        public Location? Location {get; init;}
+
+        //Navigation properties
+        public Breed? Breed { get; init; }
+        public int BreedId { get; init; }
     }
 }
