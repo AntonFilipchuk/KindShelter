@@ -2,21 +2,21 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Enitites.Breeds;
+using Core.Enitites;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DatabaseConfiguration
 {
-    public class AnimalConfiguration : IEntityTypeConfiguration<Animal>
+    public class AnimalConfiguration : IEntityTypeConfiguration<Animals>
     {
-        public void Configure(EntityTypeBuilder<Animal> builder)
+        public void Configure(EntityTypeBuilder<Animals> builder)
         {
-            builder.Property(animal => animal.AnimalName).IsRequired();
+            builder.Property(animal => animal.CollectionName).IsRequired();
             builder
                 .HasMany(animal => animal.Breeds)
-                .WithOne(breed => breed.Animal)
-                .HasForeignKey(breed => breed.AnimalId);
+                .WithOne(breed => breed.Animals)
+                .HasForeignKey(breed => breed.AnimalsId);
         }
     }
 }

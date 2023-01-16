@@ -4,7 +4,7 @@ using System.Collections.ObjectModel;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace Core.Enitites.Breeds
+namespace Core.Enitites
 {
     public record Breed : BaseEntity
     {
@@ -12,7 +12,13 @@ namespace Core.Enitites.Breeds
         public IEnumerable<Pet>? Pets { get; init; }
 
         //Navigation Properties
-        public Animal Animal { get; init; } = new Animal();
-        public int AnimalId { get; init; }
+        public Animals? Animals { get; init; }
+        public int AnimalsId { get; init; }
+        //
+
+        public int GetNumberOfPets()
+        {
+            return Pets is null ? 0 : Pets.Count();
+        }
     }
 }

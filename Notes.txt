@@ -54,10 +54,25 @@ Infrastructure - все, что непосредственно касается 
 
 Должны указать, что DbContextOptions типа ShelterContext.
 
+Иерархия:
+	Table Animal - содержит два поля:
+		string AnimalName
+		IEnumerable<Breed> Breeds
+	Пример: коллекция Кошки, которая хранит в себе список пород: Сфинкс, Британец и т.д.
+	Table Breed - содержит четыре поля:
+		string BreedName
+		IEnumerable<Pet> Pets
+		Animal Animal
+		int AnimalId
+	Пример: Порода Сфинкс, которая хранит в себе список нескольких домашних животных: Дуся и Муся.
+	Animal Animal - является навигационным свойством, как и int AnimalId.
+	Table Pet - содержит всю информацию о конкретном домашнем животном. 
+	
 Добавим DbSet для необходимых коллекций:
-        public DbSet<Animal>? Animals {get; set;}
-        public DbSet<Location>? Locations {get; set;}
-        public DbSet<AnimalType>? AnimalTypes {get; set;}
+        public DbSet<Pet>? Pets { get; set; }
+        public DbSet<Location>? Locations { get; set; }
+        public DbSet<Animal>? Animals { get; set; }
+        public DbSet<Breed>? Breeds {get; set;}
 
 В appsettings.Development.json *под* полем Logging добавим:
   "ConnectionStrings": {
@@ -80,7 +95,7 @@ b => b.MigrationsAssembly("Infrastructure")
 	dotnet ef --startup-project ..\API\ migrations add InitialCreate -o Data/Migraions
 Обязательно надо указать --startup-project ..\API\, так как именно в этом проекте регистрируется зависимость.
 Чтобы удалить migrations
-	dotnet ef --startup-project ..\API\ migrations remove.
+	dotnet ef --startup-project ..\API\ migrations remove
 
 Также из папки Infrastructure можно создать базу данных:
 	dotnet ef --startup-project ..\API\ database update
@@ -89,33 +104,112 @@ b => b.MigrationsAssembly("Infrastructure")
 	AnimalsSetConfiguration.cs
 	AnimalTypesSetConfiguration.cs
  	LocationSetConfiguration.cs
-Пример AnimalsSetConfiguration.cs:
+
+Пример AnimalConfiguration.cs:
 	
-    public class AnimalsSetConfiguration : IEntityTypeConfiguration<Animal>
+    public class AnimalConfiguration : IEntityTypeConfiguration<Animal>
     {
         public void Configure(EntityTypeBuilder<Animal> builder)
         {
-            builder.Property(a => a.Id).IsRequired();
-            builder.Property(a => a.Name).IsRequired();
-            builder.Property(a => a.Age).IsRequired();
-            builder.Property(a => a.Color).IsRequired();
-            builder.Property(a => a.Gender).IsRequired();
-            builder.Property(a => a.PictureUrl).IsRequired();
-            builder.HasOne(a => a.Location).WithMany().HasForeignKey(a => a.LocationId);
-            builder.HasOne(a => a.AnimalType).WithMany().HasForeignKey(a => a.AnimalTypeId);
+            builder.Property(breed => breed.AnimalName).IsRequired();
+            builder
+                .HasMany(breed => breed.Breeds)
+                .WithOne(breed => breedType.Animal)
+                .HasForeignKey(breedType => breedType.AnimalId);
         }
     }
+
+Так как каждый Animal хранит в себе список Breed, то нужно указать это через
+метод HasMany, и указать чего именно много имеется.
+Через метод WithOne указываем на навигационный параметр (то есть указываем на Animal из Breed).
+И через HasForeignKey указываем на id Animal.
+
+Примечание: Если затем в репозитории указать Includ`ы на коллекции чего-либо а затем попытаться
+их вернуть, то будет ошибка, чтобы ее тзбежать надо добавть:
+	    services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.WriteIndented = true;
+            });
+Однако если возвращать значения через DTO, то этой ошибки не будет. 
+
+https://metanit.com/sharp/efcore/3.4.php ^^^
 
 Для применения конфигураций нужно перезаписать метод OnModelCreating:
 
       protected override void OnModelCreating(ModelBuilder modelBuilder)
       {
-          base.OnModelCreating(modelBuilder);
-          modelBuilder.ApplyConfiguration(new AnimalsSetConfiguration());
-          modelBuilder.ApplyConfiguration(new AnimalTypesSetConfiguration());
-          modelBuilder.ApplyConfiguration(new LocationSetConfiguration());
+            base.OnModelCreating(modelBuilder);
+            modelBuilder.ApplyConfiguration(new PetConfiguration());
+            modelBuilder.ApplyConfiguration(new AnimalConfiguration());
+            modelBuilder.ApplyConfiguration(new BreedConfiguration());
+            modelBuilder.ApplyConfiguration(new LocationConfiguration());
       }
 
-Далее 
+Чтобы переименовать таблицу в БД:
+	ALTER TABLE 'Foo' RENAME TO 'Bar'
 
+Далее в Infrastructure\Data\Repositories
+Создаем IShelterRepository и ShelterRepository.
+
+В IShelterRepository добавляем методы, которые нужно будет реализовать в ShelterRepository:
+	Task<IEnumerable<Pet>> GetPets();
+        Task<IEnumerable<Animal>> GetAnimals();
+        Task<IEnumerable<Breed>> GetBreeds();
+В ShelterRepository в конструкторе внедряем ShelterContext. 
+Реализовываем эти методы в ShelterRepository:
+Пример на одном методе GetPets():
+
+        private readonly ShelterContext _context;
+        private readonly ILogger<ShelterRepository> _logger;
+
+        public ShelterRepository(ShelterContext context, ILogger<ShelterRepository> logger)
+        {
+            _context = context;
+            _logger = logger;
+        }
+
+        public async Task<IEnumerable<Pet>> GetPets()
+        {
+            IEnumerable<Pet> pets = new List<Pet>();
+            try
+            {
+                pets = await _context.Pets!
+                    .Include(pet => pet.Breed)
+                    .ThenInclude(x => x!.Animal)
+                    .Include(pet => pet.Location)
+                    .ToListAsync();
+            }
+            catch (System.Exception ex)
+            {
+                _logger.LogError(ex, ex.Message);
+            }
+
+            return pets;
+        }
+
+Регистрируем сервис в Program.cs:
+	 services.AddScoped<IShelterRepository, ShelterRepository>();
+
+В контроллере внедряем *IShelterRepository* - именно интерфейс, иначе будет ошибка. 
+И описываем endpoints API:
+
+        private readonly IShelterRepository _repository;
+
+        public ShelterController(IShelterRepository repository)
+        {
+            _repository = repository;
+        }
+
+        [HttpGet("pets")]
+        public async Task<ActionResult<IEnumerable<Pet>>> GetAnimals()
+        {
+            return Ok(await _repository.GetPets());
+        }
+
+Добавление Automapper'а:
+Из nuget gallety установить в API 
+	AutoMapper.Extensions.Microsoft.DependencyInjection
 

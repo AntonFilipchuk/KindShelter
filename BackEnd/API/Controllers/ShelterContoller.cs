@@ -2,8 +2,9 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Enitites;
-using Core.Enitites.Breeds;
+using API.DTOs;
+using AutoMapper;
+using Core.Enitites; 
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
@@ -13,28 +14,36 @@ namespace API.Controllers
     public class ShelterController : BaseController
     {
         private readonly IShelterRepository _repository;
+        private readonly IMapper _mapper;
 
-        public ShelterController(IShelterRepository repository)
+        public ShelterController(IShelterRepository repository, IMapper mapper)
         {
             _repository = repository;
+            _mapper = mapper;
         }
 
         [HttpGet("pets")]
-        public async Task<ActionResult<IEnumerable<Pet>>> GetAnimals()
+        public async Task<ActionResult<IEnumerable<PetDTO>>> GetAnimals()
         {
-            return Ok(await _repository.GetPets());
+            IEnumerable<Pet> pets = await _repository.GetPets();
+            IEnumerable<PetDTO> petDTOs = _mapper.Map<IEnumerable<Pet>, IEnumerable<PetDTO>>(pets);
+            return Ok(petDTOs);
         }
 
         [HttpGet("animals")]
-        public async Task<ActionResult<IEnumerable<Breed>>> GetBreeds()
+        public async Task<ActionResult<IEnumerable<AnimalDTO>>> GetBreeds()
         {
-            return Ok(await _repository.GetAnimals());
+            IEnumerable<Animals> animals = await _repository.GetAnimals();
+            IEnumerable<AnimalDTO> animalDTOs = _mapper.Map<IEnumerable<Animals>, IEnumerable<AnimalDTO>>(animals);
+            return Ok(animalDTOs);
         }
 
         [HttpGet("breeds")]
         public async Task<ActionResult<IEnumerable<Breed>>> GetBreedTypes()
         {
-            return Ok(await _repository.GetBreeds());
+            IEnumerable<Breed> breeds = await _repository.GetBreeds();
+            IEnumerable<BreedDTO> breedDTOs = _mapper.Map<IEnumerable<Breed>, IEnumerable<BreedDTO>>(breeds);
+            return Ok(breedDTOs);
         }
     }
 }

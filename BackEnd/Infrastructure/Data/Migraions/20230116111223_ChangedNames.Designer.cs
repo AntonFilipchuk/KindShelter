@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migraions
 {
     [DbContext(typeof(ShelterContext))]
-    partial class ShelterContextModelSnapshot : ModelSnapshot
+    [Migration("20230116111223_ChangedNames")]
+    partial class ChangedNames
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
@@ -23,7 +26,7 @@ namespace Infrastructure.Data.Migraions
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CollectionName")
+                    b.Property<string>("CollectionNAme")
                         .IsRequired()
                         .HasColumnType("TEXT");
 

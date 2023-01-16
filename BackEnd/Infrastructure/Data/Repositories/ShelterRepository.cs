@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Enitites;
-using Core.Enitites.Breeds;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -27,7 +26,7 @@ namespace Infrastructure.Data.Repositories
             {
                 pets = await _context.Pets!
                     .Include(pet => pet.Breed)
-                    .ThenInclude(x => x!.Animal)
+                    .ThenInclude(x => x!.Animals)
                     .Include(pet => pet.Location)
                     .ToListAsync();
             }
@@ -44,7 +43,10 @@ namespace Infrastructure.Data.Repositories
             IEnumerable<Breed> breeds = new List<Breed>();
             try
             {
-                breeds = await _context.Breeds!.ToListAsync();
+                breeds = await _context.Breeds!
+                .Include(breed => breed.Animals)
+                .Include(breed => breed.Pets)
+                .ToListAsync();
             }
             catch (System.Exception ex)
             {
@@ -54,12 +56,14 @@ namespace Infrastructure.Data.Repositories
             return breeds;
         }
 
-        public async Task<IEnumerable<Animal>> GetAnimals()
+        public async Task<IEnumerable<Animals>> GetAnimals()
         {
-            IEnumerable<Animal> animals = new List<Animal>();
+            IEnumerable<Animals> animals = new List<Animals>();
             try
             {
-                animals = await _context.Animals!.ToListAsync();
+                animals = await _context.Animals!
+                .Include(animals => animals.Breeds)
+                .ToListAsync();
             }
             catch (System.Exception ex)
             {

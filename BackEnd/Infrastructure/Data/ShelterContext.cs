@@ -4,7 +4,6 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core;
 using Core.Enitites;
-using Core.Enitites.Breeds;
 using Infrastructure.DatabaseConfiguration;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,7 +17,7 @@ namespace Infrastructure.Data
 
         public DbSet<Pet>? Pets { get; set; }
         public DbSet<Location>? Locations { get; set; }
-        public DbSet<Animal>? Animals { get; set; }
+        public DbSet<Animals>? Animals { get; set; }
         public DbSet<Breed>? Breeds {get; set;}
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)

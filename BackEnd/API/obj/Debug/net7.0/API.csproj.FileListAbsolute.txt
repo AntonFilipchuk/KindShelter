@@ -70,3 +70,5 @@ B:\Projects\AnimalShelter\kindShelter\BackEnd\API\bin\Debug\net7.0\Core.dll
 B:\Projects\AnimalShelter\kindShelter\BackEnd\API\bin\Debug\net7.0\Infrastructure.dll
 B:\Projects\AnimalShelter\kindShelter\BackEnd\API\bin\Debug\net7.0\Core.pdb
 B:\Projects\AnimalShelter\kindShelter\BackEnd\API\bin\Debug\net7.0\Infrastructure.pdb
+B:\Projects\AnimalShelter\kindShelter\BackEnd\API\bin\Debug\net7.0\AutoMapper.dll
+B:\Projects\AnimalShelter\kindShelter\BackEnd\API\bin\Debug\net7.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll

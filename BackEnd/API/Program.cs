@@ -1,4 +1,5 @@
 using System.Text.Json.Serialization;
+using API.Mapper;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -46,6 +47,13 @@ internal class Program
                 options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
                 options.JsonSerializerOptions.WriteIndented = true;
             });
+
+        services.AddAutoMapper(
+            typeof(PetMapProfile),
+            typeof(LocationMapProfile),
+            typeof(BreedMapProfile),
+            typeof(AnimalMapProfile)
+        );
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 

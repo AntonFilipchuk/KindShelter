@@ -3,6 +3,7 @@ using System;
 using Infrastructure.Data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,20 +11,22 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migraions
 {
     [DbContext(typeof(ShelterContext))]
-    partial class ShelterContextModelSnapshot : ModelSnapshot
+    [Migration("20230116093609_ChangedBreed")]
+    partial class ChangedBreed
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
 
-            modelBuilder.Entity("Core.Enitites.Animals", b =>
+            modelBuilder.Entity("Core.Enitites.Animal", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("CollectionName")
+                    b.Property<string>("AnimalName")
                         .IsRequired()
                         .HasColumnType("TEXT");
 
@@ -38,7 +41,7 @@ namespace Infrastructure.Data.Migraions
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("AnimalsId")
+                    b.Property<int>("AnimalId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("BreedName")
@@ -47,7 +50,7 @@ namespace Infrastructure.Data.Migraions
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AnimalsId");
+                    b.HasIndex("AnimalId");
 
                     b.ToTable("Breeds");
                 });
@@ -122,13 +125,13 @@ namespace Infrastructure.Data.Migraions
 
             modelBuilder.Entity("Core.Enitites.Breed", b =>
                 {
-                    b.HasOne("Core.Enitites.Animals", "Animals")
+                    b.HasOne("Core.Enitites.Animal", "Animal")
                         .WithMany("Breeds")
-                        .HasForeignKey("AnimalsId")
+                        .HasForeignKey("AnimalId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.Navigation("Animals");
+                    b.Navigation("Animal");
                 });
 
             modelBuilder.Entity("Core.Enitites.Location", b =>
@@ -153,7 +156,7 @@ namespace Infrastructure.Data.Migraions
                     b.Navigation("Breed");
                 });
 
-            modelBuilder.Entity("Core.Enitites.Animals", b =>
+            modelBuilder.Entity("Core.Enitites.Animal", b =>
                 {
                     b.Navigation("Breeds");
                 });
