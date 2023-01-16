@@ -12,7 +12,7 @@ namespace API.Mapper
     {
         public AnimalMapProfile()
         {
-            CreateMap<Animals, AnimalDTO>()
+            CreateMap<Animals, AnimalsDTO>()
                 .ForMember(
                     animalDTO => animalDTO.Breeds,
                     options => options.MapFrom(animal => animal.BreedsList())

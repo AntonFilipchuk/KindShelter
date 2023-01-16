@@ -9,8 +9,11 @@ namespace Infrastructure.Data.Repositories
 {
     public interface IShelterRepository
     {
-        Task<IEnumerable<Pet>> GetPets();
-        Task<IEnumerable<Animals>> GetAnimals();
-        Task<IEnumerable<Breed>> GetBreeds();
+        Task<IEnumerable<Pet>> GetPetsAsync();
+        Task<IEnumerable<Animals>> GetAnimalsAsync();
+        Task<IEnumerable<Breed>> GetBreedsAsync();
+        Task<Pet?> GetPetByIdAsync(int id);
+        Task<Breed?> GetBreedByIdAsync(int id);
+        Task<Animals?> GetAnimalsByIdAsync(int id);
     }
 }

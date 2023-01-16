@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.DTOs
 {
-    public record BreedDTO
+    public record BreedDTO : BaseDTO
     {
         public string AnimalCollectionName { get; init; } = string.Empty;
         public string BreedName { get; init; } = string.Empty;

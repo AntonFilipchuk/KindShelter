@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.DTOs
 {
-    public record PetDTO
+    public record PetDTO : BaseDTO
     {
         public PetDTO(string city, string? street, int? house, int? flatNumber)
         {

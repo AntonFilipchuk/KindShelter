@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.DTOs
 {
-    public record LocationDTO
+    public record LocationDTO : BaseDTO
     {
         public string City { get; init; } = string.Empty;
         public string? Street { get; init; }

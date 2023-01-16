@@ -11,66 +11,56 @@ namespace Infrastructure.Data.Repositories
     public class ShelterRepository : IShelterRepository
     {
         private readonly ShelterContext _context;
-        private readonly ILogger<ShelterRepository> _logger;
 
         public ShelterRepository(ShelterContext context, ILogger<ShelterRepository> logger)
         {
             _context = context;
-            _logger = logger;
         }
 
-        public async Task<IEnumerable<Pet>> GetPets()
+        public async Task<IEnumerable<Pet>> GetPetsAsync()
         {
-            IEnumerable<Pet> pets = new List<Pet>();
-            try
-            {
-                pets = await _context.Pets!
-                    .Include(pet => pet.Breed)
-                    .ThenInclude(x => x!.Animals)
-                    .Include(pet => pet.Location)
-                    .ToListAsync();
-            }
-            catch (System.Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-            }
-
-            return pets;
+            return await _context.Pets!
+                .Include(pet => pet.Breed)
+                .ThenInclude(x => x!.Animals)
+                .Include(pet => pet.Location)
+                .ToListAsync();
         }
 
-        public async Task<IEnumerable<Breed>> GetBreeds()
+        public async Task<IEnumerable<Breed>> GetBreedsAsync()
         {
-            IEnumerable<Breed> breeds = new List<Breed>();
-            try
-            {
-                breeds = await _context.Breeds!
+            return await _context.Breeds!
                 .Include(breed => breed.Animals)
                 .Include(breed => breed.Pets)
                 .ToListAsync();
-            }
-            catch (System.Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-            }
-
-            return breeds;
         }
 
-        public async Task<IEnumerable<Animals>> GetAnimals()
+        public async Task<IEnumerable<Animals>> GetAnimalsAsync()
         {
-            IEnumerable<Animals> animals = new List<Animals>();
-            try
-            {
-                animals = await _context.Animals!
-                .Include(animals => animals.Breeds)
-                .ToListAsync();
-            }
-            catch (System.Exception ex)
-            {
-                _logger.LogError(ex, ex.Message);
-            }
+            return await _context.Animals!.Include(animals => animals.Breeds).ToListAsync();
+        }
 
-            return animals;
+        public async Task<Pet?> GetPetByIdAsync(int id)
+        {
+            return await _context.Pets!
+                .Include(p => p.Breed)
+                .ThenInclude(b => b!.Animals)
+                .Include(pet => pet.Location)
+                .FirstOrDefaultAsync(p => p.Id == id);
+        }
+
+        public async Task<Breed?> GetBreedByIdAsync(int id)
+        {
+            return await _context.Breeds!
+                .Include(breed => breed.Animals)
+                .Include(breed => breed.Pets)
+                .FirstOrDefaultAsync(b => b.Id == id);
+        }
+
+        public async Task<Animals?> GetAnimalsByIdAsync(int id)
+        {
+            return await _context.Animals!
+                .Include(animals => animals.Breeds)
+                .FirstOrDefaultAsync(a => a.Id == id);
         }
     }
 }

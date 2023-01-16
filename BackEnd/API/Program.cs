@@ -40,13 +40,7 @@ internal class Program
         in WebApplicationBuilder builder
     )
     {
-        services
-            .AddControllers()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                options.JsonSerializerOptions.WriteIndented = true;
-            });
+        services.AddControllers();
 
         services.AddAutoMapper(
             typeof(PetMapProfile),

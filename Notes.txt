@@ -55,17 +55,17 @@ Infrastructure - все, что непосредственно касается 
 Должны указать, что DbContextOptions типа ShelterContext.
 
 Иерархия:
-	Table Animal - содержит два поля:
-		string AnimalName
+	Table Animals - содержит два поля:
+		string CollectionName
 		IEnumerable<Breed> Breeds
 	Пример: коллекция Кошки, которая хранит в себе список пород: Сфинкс, Британец и т.д.
 	Table Breed - содержит четыре поля:
 		string BreedName
 		IEnumerable<Pet> Pets
-		Animal Animal
+		Animals Animals
 		int AnimalId
 	Пример: Порода Сфинкс, которая хранит в себе список нескольких домашних животных: Дуся и Муся.
-	Animal Animal - является навигационным свойством, как и int AnimalId.
+	Animals Animals - является навигационным свойством, как и int AnimalsId.
 	Table Pet - содержит всю информацию о конкретном домашнем животном. 
 	
 Добавим DbSet для необходимых коллекций:
@@ -125,7 +125,11 @@ b => b.MigrationsAssembly("Infrastructure")
 И через HasForeignKey указываем на id Animal.
 
 Примечание: Если затем в репозитории указать Includ`ы на коллекции чего-либо а затем попытаться
-их вернуть, то будет ошибка, чтобы ее тзбежать надо добавть:
+их вернуть, то будет ошибка
+	System.Text.Json.JsonException: A possible object cycle was detected. 
+	This can either be due to a cycle or if the object depth is larger than the maximum allowed depth 
+	of 32.
+, чтобы ее избежать надо добавть:
 	    services
             .AddControllers()
             .AddJsonOptions(options =>
@@ -213,3 +217,67 @@ https://metanit.com/sharp/efcore/3.4.php ^^^
 Из nuget gallety установить в API 
 	AutoMapper.Extensions.Microsoft.DependencyInjection
 
+Создадим PetDTO:
+
+    public record PetDTO
+    {
+        public PetDTO(string city, string? street, int? house, int? flatNumber)
+        {
+            Location = new LocationDTO()
+            {
+                City = city,
+                Street = street,
+                FlatNumber = flatNumber,
+                House = house
+            };
+        }
+
+        public string Name { get; init; } = string.Empty;
+        public bool? HasVaccines { get; init; } = null;
+        public string PictureUrl { get; init; } = string.Empty;
+        public int Age { get; init; } = 1;
+        public string Gender { get; init; } = string.Empty;
+        public string Color { get; init; } = string.Empty;
+        public string Breed { get; init; } = string.Empty;
+        public string AnimalType { get; init; } = string.Empty;
+        public LocationDTO Location { get; private set; }
+    }
+
+Далее создадим профиль маппера для этого DTO: 
+   
+    public class PetMapProfile : Profile
+    {
+        public PetMapProfile()
+        {
+            CreateMap<Pet, PetDTO>()
+                .ConstructUsing(
+                    pet =>
+                        new PetDTO(
+                            pet.Location!.City,
+                            pet.Location!.Street,
+                            pet.Location!.House,
+                            pet.Location!.FlatNumber
+                        )
+                )
+                .ForMember(
+                    petDto => petDto.Breed,
+                    options => options.MapFrom(pet => pet.Breed!.BreedName)
+                )
+                .ForMember(
+                    petDto => petDto.AnimalType,
+                    options => options.MapFrom(pet => pet.Breed!.Animals!.CollectionName)
+                );
+        }
+    }
+
+Чтобы воспользоваться конструктором в PetDTO нужно воспользоваться .ConstructUsing() и 
+создать новый record PetDTO.
+
+Регистрируем все профили маппера в Program.cs через reflection:
+        
+	services.AddAutoMapper(
+            typeof(PetMapProfile),
+            typeof(LocationMapProfile),
+            typeof(BreedMapProfile),
+            typeof(AnimalMapProfile)
+        );
