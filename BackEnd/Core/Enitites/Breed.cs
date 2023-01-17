@@ -12,7 +12,7 @@ namespace Core.Enitites
         public IEnumerable<Pet>? Pets { get; init; }
 
         //Navigation Properties
-        public Animals? Animals { get; init; }
+        public Animals Animals { get; init; } = default!;
         public int AnimalsId { get; init; }
         //
 

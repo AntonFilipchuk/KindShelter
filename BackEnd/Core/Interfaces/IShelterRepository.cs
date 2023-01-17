@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 using Core.Enitites;
 
 
-namespace Infrastructure.Data.Repositories
+namespace Core.Interfaces
 {
     public interface IShelterRepository
     {

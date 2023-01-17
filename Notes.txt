@@ -281,3 +281,65 @@ https://metanit.com/sharp/efcore/3.4.php ^^^
             typeof(BreedMapProfile),
             typeof(AnimalMapProfile)
         );
+
+Контроллер ShelterController наследуется от BaseController.
+BaseController:
+    [ApiController]
+    [Route("api/[controller]")]
+    public class BaseController : ControllerBase { }
+В ShelterController в конструктор передадим IShelterRepository, IMappe: 
+
+        private readonly IShelterRepository _repository;
+        private readonly IMapper _mapper;
+
+        public ShelterController(IShelterRepository repository, IMapper mapper)
+        {
+            _repository = repository;
+            _mapper = mapper;
+        }
+
+Для удобства создадим два вспомогательных метода для проверки на null и маппинга:
+
+        private ActionResult<TOut> ReturnMappedObject<TIn, TOut>(in TIn? item)
+            where TIn : BaseEntity
+            where TOut : BaseDTO
+        {
+            if (item is null)
+            {
+                return NotFound();
+            }
+
+            TOut mappedObject = _mapper.Map<TIn, TOut>(item);
+            return Ok(mappedObject);
+        }
+
+        private ActionResult<IEnumerable<Tout>> ReturnMappedCollection<Tin, Tout>(
+            IEnumerable<Tin>? collection
+        )
+            where Tin : BaseEntity
+            where Tout : BaseDTO
+        {
+            if (collection is null || collection.Count() == 0)
+            {
+                return NotFound();
+            }
+
+            IEnumerable<Tout> mappedCollection = _mapper.Map<IEnumerable<Tin>, IEnumerable<Tout>>(
+                collection
+            );
+
+            return Ok(mappedCollection);
+        }
+Добавляем endPoint`ы:
+
+        [HttpGet("pets")]
+        public async Task<ActionResult<IEnumerable<PetDTO>>> GetPets()
+        {
+            return ReturnMappedCollection<Pet, PetDTO>(await _repository.GetPetsAsync());
+        }
+
+        [HttpGet("pets/{id}")]
+        public async Task<ActionResult<PetDTO>> GetPetById(int id)
+        {
+            return ReturnMappedObject<Pet, PetDTO>(await _repository.GetPetByIdAsync(id));
+        }

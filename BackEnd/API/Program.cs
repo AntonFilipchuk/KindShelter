@@ -1,5 +1,6 @@
 using System.Text.Json.Serialization;
 using API.Mapper;
+using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
@@ -40,11 +41,19 @@ internal class Program
         in WebApplicationBuilder builder
     )
     {
-        services.AddControllers();
+        services
+            .AddControllers()
+            .AddJsonOptions(options =>
+            {
+                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+                options.JsonSerializerOptions.WriteIndented = true;
+            });
+        ;
 
         services.AddAutoMapper(
             typeof(PetMapProfile),
-            typeof(LocationMapProfile),
+            typeof(CityMapProfile),
+            typeof(AdressMapProfile),
             typeof(BreedMapProfile),
             typeof(AnimalMapProfile)
         );
@@ -61,6 +70,7 @@ internal class Program
         );
 
         services.AddScoped<IShelterRepository, ShelterRepository>();
+        services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
     }
 
     private static async Task CreateDatabase(WebApplication app)

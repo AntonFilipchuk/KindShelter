@@ -16,10 +16,8 @@ namespace API.Mapper
                 .ConstructUsing(
                     pet =>
                         new PetDTO(
-                            pet.Location!.City,
-                            pet.Location!.Street,
-                            pet.Location!.House,
-                            pet.Location!.FlatNumber
+                            pet.City,
+                            pet.Adress
                         )
                 )
                 .ForMember(

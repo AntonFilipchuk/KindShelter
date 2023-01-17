@@ -12,9 +12,10 @@ namespace Infrastructure.DatabaseConfiguration
     {
         public void Configure(EntityTypeBuilder<Breed> builder)
         {
-            builder.Property(animalType => animalType.BreedName).IsRequired();
+            builder.Property(breed => breed.BreedName).IsRequired();
+            builder.Property(breed => breed.AnimalsId).IsRequired();
             builder
-                .HasMany(animalType => animalType.Pets)
+                .HasMany(breed => breed.Pets)
                 .WithOne(pet => pet.Breed)
                 .HasForeignKey(pet => pet.BreedId);
         }

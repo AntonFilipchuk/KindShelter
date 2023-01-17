@@ -10,7 +10,7 @@ namespace Core.Enitites
         public string CollectionName { get; init; } = string.Empty;
         public IEnumerable<Breed>? Breeds {get; init;}
 
-        public List<string> BreedsList()
+        public List<string> GetBreedsList()
         {
             List<string> breeds = new List<string>();
             if (Breeds is null)

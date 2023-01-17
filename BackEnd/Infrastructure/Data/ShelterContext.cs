@@ -16,9 +16,10 @@ namespace Infrastructure.Data
         public ShelterContext(DbContextOptions<ShelterContext> options) : base(options) { }
 
         public DbSet<Pet>? Pets { get; set; }
-        public DbSet<Location>? Locations { get; set; }
+        public DbSet<City>? Cities { get; set; }
+        public DbSet<Adress>? Adresses { get; set; }
         public DbSet<Animals>? Animals { get; set; }
-        public DbSet<Breed>? Breeds {get; set;}
+        public DbSet<Breed>? Breeds { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -26,7 +27,8 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new PetConfiguration());
             modelBuilder.ApplyConfiguration(new AnimalConfiguration());
             modelBuilder.ApplyConfiguration(new BreedConfiguration());
-            modelBuilder.ApplyConfiguration(new LocationConfiguration());
+            modelBuilder.ApplyConfiguration(new CityConfiguration());
+            modelBuilder.ApplyConfiguration(new AdressConfiguration());
         }
     }
 }

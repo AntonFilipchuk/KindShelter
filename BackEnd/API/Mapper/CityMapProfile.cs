@@ -8,14 +8,14 @@ using Core.Enitites;
 
 namespace API.Mapper
 {
-    public class AnimalMapProfile : Profile
+    public class CityMapProfile : Profile
     {
-        public AnimalMapProfile()
+        public CityMapProfile()
         {
-            CreateMap<Animals, AnimalsDTO>()
+            CreateMap<City, CityDTO>()
                 .ForMember(
-                    animalDTO => animalDTO.Breeds,
-                    options => options.MapFrom(animal => animal.GetBreedsList())
+                    cityDto => cityDto.NumberOfAdresses,
+                    options => options.MapFrom(city => city.GetNumberOfAdresses())
                 );
         }
     }

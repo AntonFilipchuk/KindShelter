@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Enitites;
+using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 
@@ -22,7 +23,8 @@ namespace Infrastructure.Data.Repositories
             return await _context.Pets!
                 .Include(pet => pet.Breed)
                 .ThenInclude(x => x!.Animals)
-                .Include(pet => pet.Location)
+                .Include(p => p.Adress)
+                .Include(p => p.City)
                 .ToListAsync();
         }
 
@@ -44,7 +46,6 @@ namespace Infrastructure.Data.Repositories
             return await _context.Pets!
                 .Include(p => p.Breed)
                 .ThenInclude(b => b!.Animals)
-                .Include(pet => pet.Location)
                 .FirstOrDefaultAsync(p => p.Id == id);
         }
 

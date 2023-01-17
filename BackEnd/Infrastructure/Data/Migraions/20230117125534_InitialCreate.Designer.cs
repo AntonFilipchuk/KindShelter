@@ -11,14 +11,40 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migraions
 {
     [DbContext(typeof(ShelterContext))]
-    [Migration("20230116111326_ChangedNames2")]
-    partial class ChangedNames2
+    [Migration("20230117125534_InitialCreate")]
+    partial class InitialCreate
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "7.0.0");
+
+            modelBuilder.Entity("Core.Enitites.Adress", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("CityId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("FlatNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("HouseNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Street")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("CityId");
+
+                    b.ToTable("Adresses");
+                });
 
             modelBuilder.Entity("Core.Enitites.Animals", b =>
                 {
@@ -55,34 +81,19 @@ namespace Infrastructure.Data.Migraions
                     b.ToTable("Breeds");
                 });
 
-            modelBuilder.Entity("Core.Enitites.Location", b =>
+            modelBuilder.Entity("Core.Enitites.City", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("City")
+                    b.Property<string>("CityName")
                         .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("FlatNumber")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("House")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("PetId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Street")
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("PetId")
-                        .IsUnique();
-
-                    b.ToTable("Locations");
+                    b.ToTable("Cities");
                 });
 
             modelBuilder.Entity("Core.Enitites.Pet", b =>
@@ -91,14 +102,23 @@ namespace Infrastructure.Data.Migraions
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("AdressId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Age")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("BreedId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("CityId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("Color")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Description")
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Gender")
@@ -118,9 +138,26 @@ namespace Infrastructure.Data.Migraions
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AdressId")
+                        .IsUnique();
+
                     b.HasIndex("BreedId");
 
+                    b.HasIndex("CityId")
+                        .IsUnique();
+
                     b.ToTable("Pets");
+                });
+
+            modelBuilder.Entity("Core.Enitites.Adress", b =>
+                {
+                    b.HasOne("Core.Enitites.City", "City")
+                        .WithMany("Adresses")
+                        .HasForeignKey("CityId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("Core.Enitites.Breed", b =>
@@ -134,26 +171,27 @@ namespace Infrastructure.Data.Migraions
                     b.Navigation("Animals");
                 });
 
-            modelBuilder.Entity("Core.Enitites.Location", b =>
-                {
-                    b.HasOne("Core.Enitites.Pet", "Pet")
-                        .WithOne("Location")
-                        .HasForeignKey("Core.Enitites.Location", "PetId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Pet");
-                });
-
             modelBuilder.Entity("Core.Enitites.Pet", b =>
                 {
+                    b.HasOne("Core.Enitites.Adress", "Adress")
+                        .WithOne()
+                        .HasForeignKey("Core.Enitites.Pet", "AdressId");
+
                     b.HasOne("Core.Enitites.Breed", "Breed")
                         .WithMany("Pets")
                         .HasForeignKey("BreedId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Core.Enitites.City", "City")
+                        .WithOne()
+                        .HasForeignKey("Core.Enitites.Pet", "CityId");
+
+                    b.Navigation("Adress");
+
                     b.Navigation("Breed");
+
+                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("Core.Enitites.Animals", b =>
@@ -166,9 +204,9 @@ namespace Infrastructure.Data.Migraions
                     b.Navigation("Pets");
                 });
 
-            modelBuilder.Entity("Core.Enitites.Pet", b =>
+            modelBuilder.Entity("Core.Enitites.City", b =>
                 {
-                    b.Navigation("Location");
+                    b.Navigation("Adresses");
                 });
 #pragma warning restore 612, 618
         }

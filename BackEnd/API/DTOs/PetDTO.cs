@@ -2,20 +2,15 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Core.Enitites;
 
 namespace API.DTOs
 {
     public record PetDTO : BaseDTO
     {
-        public PetDTO(string city, string? street, int? house, int? flatNumber)
+        public PetDTO(City? city, Adress? adress)
         {
-            Location = new LocationDTO()
-            {
-                City = city,
-                Street = street,
-                FlatNumber = flatNumber,
-                House = house
-            };
+            Adress = new PetAdressDTO(city, adress);
         }
 
         public string Name { get; init; } = string.Empty;
@@ -26,6 +21,6 @@ namespace API.DTOs
         public string Color { get; init; } = string.Empty;
         public string Breed { get; init; } = string.Empty;
         public string AnimalType { get; init; } = string.Empty;
-        public LocationDTO Location { get; private set; }
+        public PetAdressDTO Adress { get; private set; }
     }
 }
