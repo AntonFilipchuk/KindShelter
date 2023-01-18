@@ -8,23 +8,16 @@ namespace API.DTOs
 {
     public record PetAdressDTO
     {
-        public PetAdressDTO(City? city, Adress? adress)
+        public PetAdressDTO(Adress? adress)
         {
-            if (city is null)
-            {
-                City = null;
-            }
-            else
-            {
-                City = city.CityName;
-            }
-
             if (adress is null)
             {
+                City = null;
                 Street = null;
             }
             else
             {
+                City = adress.City.CityName;
                 Street = adress.Street;
                 HouseNumber = adress.HouseNumber;
                 FlatNumber = adress.FlatNumber;

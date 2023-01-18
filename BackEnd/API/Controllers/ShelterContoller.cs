@@ -26,8 +26,8 @@ namespace API.Controllers
         [HttpGet("pets")]
         public async Task<ActionResult<IEnumerable<PetDTO>>> GetPets()
         {
-            return Ok(await _repository.GetPetsAsync());
-            //return ReturnMappedCollection<Pet, PetDTO>(await _repository.GetPetsAsync());
+            //return Ok(await _repository.GetPetsAsync());
+            return ReturnMappedCollection<Pet, PetDTO>(await _repository.GetPetsAsync());
         }
 
         [HttpGet("pets/{id}")]

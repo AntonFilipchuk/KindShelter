@@ -91,7 +91,6 @@ namespace Infrastructure.Data.Migraions
                     Color = table.Column<string>(type: "TEXT", nullable: false),
                     HasVaccines = table.Column<bool>(type: "INTEGER", nullable: true),
                     Description = table.Column<string>(type: "TEXT", nullable: true),
-                    CityId = table.Column<int>(type: "INTEGER", nullable: true),
                     AdressId = table.Column<int>(type: "INTEGER", nullable: true),
                     BreedId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -109,11 +108,6 @@ namespace Infrastructure.Data.Migraions
                         principalTable: "Breeds",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
-                    table.ForeignKey(
-                        name: "FK_Pets_Cities_CityId",
-                        column: x => x.CityId,
-                        principalTable: "Cities",
-                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(
@@ -136,12 +130,6 @@ namespace Infrastructure.Data.Migraions
                 name: "IX_Pets_BreedId",
                 table: "Pets",
                 column: "BreedId");
-
-            migrationBuilder.CreateIndex(
-                name: "IX_Pets_CityId",
-                table: "Pets",
-                column: "CityId",
-                unique: true);
         }
 
         /// <inheritdoc />

@@ -8,9 +8,9 @@ namespace API.DTOs
 {
     public record PetDTO : BaseDTO
     {
-        public PetDTO(City? city, Adress? adress)
+        public PetDTO(Adress? adress)
         {
-            Adress = new PetAdressDTO(city, adress);
+            Adress = new PetAdressDTO(adress);
         }
 
         public string Name { get; init; } = string.Empty;

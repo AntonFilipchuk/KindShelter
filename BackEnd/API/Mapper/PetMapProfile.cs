@@ -16,7 +16,6 @@ namespace API.Mapper
                 .ConstructUsing(
                     pet =>
                         new PetDTO(
-                            pet.City,
                             pet.Adress
                         )
                 )

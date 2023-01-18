@@ -22,9 +22,9 @@ namespace Infrastructure.Data.Repositories
         {
             return await _context.Pets!
                 .Include(pet => pet.Breed)
-                .ThenInclude(x => x!.Animals)
-                .Include(p => p.Adress)
-                .Include(p => p.City)
+                .ThenInclude(breed => breed!.Animals)
+                .Include(pet => pet.Adress)
+                .ThenInclude(adress => adress!.City)
                 .ToListAsync();
         }
 

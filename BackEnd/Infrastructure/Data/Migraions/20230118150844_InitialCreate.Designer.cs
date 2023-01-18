@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migraions
 {
     [DbContext(typeof(ShelterContext))]
-    [Migration("20230117125534_InitialCreate")]
+    [Migration("20230118150844_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -111,9 +111,6 @@ namespace Infrastructure.Data.Migraions
                     b.Property<int>("BreedId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("CityId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Color")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -142,9 +139,6 @@ namespace Infrastructure.Data.Migraions
                         .IsUnique();
 
                     b.HasIndex("BreedId");
-
-                    b.HasIndex("CityId")
-                        .IsUnique();
 
                     b.ToTable("Pets");
                 });
@@ -183,15 +177,9 @@ namespace Infrastructure.Data.Migraions
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
-                    b.HasOne("Core.Enitites.City", "City")
-                        .WithOne()
-                        .HasForeignKey("Core.Enitites.Pet", "CityId");
-
                     b.Navigation("Adress");
 
                     b.Navigation("Breed");
-
-                    b.Navigation("City");
                 });
 
             modelBuilder.Entity("Core.Enitites.Animals", b =>

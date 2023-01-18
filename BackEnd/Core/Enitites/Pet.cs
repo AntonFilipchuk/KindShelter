@@ -16,8 +16,6 @@ namespace Core.Enitites
         public bool? HasVaccines { get; init; } = false;
         public string? Description { get; init; } = string.Empty;
 
-        public City? City { get; init; }
-        public int? CityId { get; init; }
         public Adress? Adress { get; init; }
         public int? AdressId { get; init; }
 
