@@ -18,7 +18,14 @@ namespace Infrastructure.DatabaseConfiguration
             builder.Property(pet => pet.Color).IsRequired();
             builder.Property(pet => pet.Gender).IsRequired();
             builder.Property(pet => pet.PictureUrl).IsRequired();
-            builder.HasOne(pet => pet.Adress).WithOne().HasForeignKey<Pet>(p => p.AdressId);
+            builder.Property(pet => pet.HasVaccines).IsRequired(false);
+            builder.Property(pet => pet.Description).IsRequired(false);
+            builder.Property(pet => pet.AdressId).IsRequired(false);
+            builder
+                .HasOne(pet => pet.Adress)
+                .WithOne()
+                .HasForeignKey<Pet>(p => p.AdressId)
+                .IsRequired(false);
         }
     }
 }

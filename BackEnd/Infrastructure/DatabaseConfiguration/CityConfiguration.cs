@@ -16,7 +16,8 @@ namespace Infrastructure.DatabaseConfiguration
             builder
                 .HasMany(city => city.Adresses)
                 .WithOne(adress => adress.City)
-                .HasForeignKey(adress => adress.CityId);
+                .HasForeignKey(adress => adress.CityId)
+                .IsRequired(false);
         }
     }
 }

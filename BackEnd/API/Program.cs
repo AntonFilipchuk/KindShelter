@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 
 internal class Program
 {
-    private static async Task Main(string[] args)
+    private static void Main(string[] args)
     {
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         IServiceCollection services = builder.Services;
@@ -19,7 +19,7 @@ internal class Program
         ConfigureServices(ref services, in builder);
 
         var app = builder.Build();
-        await CreateDatabase(app);
+        CreateDatabase(app);
 
         if (app.Environment.IsDevelopment())
         {
@@ -73,22 +73,14 @@ internal class Program
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
     }
 
-    private static async Task CreateDatabase(WebApplication app)
+    private static void CreateDatabase(WebApplication app)
     {
         using (var scope = app.Services.CreateAsyncScope())
         {
             var services = scope.ServiceProvider;
-            var loggerFactory = services.GetRequiredService<ILoggerFactory>();
-            try
-            {
-                var context = services.GetRequiredService<ShelterContext>();
-                await context.Database.MigrateAsync();
-            }
-            catch (Exception ex)
-            {
-                var logger = loggerFactory.CreateLogger<Program>();
-                logger.LogError(ex, "An error occured during migration");
-            }
+            var context = services.GetRequiredService<ShelterContext>();
+            ShelterContextRandomSeed scr = new ShelterContextRandomSeed(context);
+            scr.RandomSeed();
         }
     }
 }

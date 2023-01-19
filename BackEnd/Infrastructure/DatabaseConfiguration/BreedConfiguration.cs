@@ -17,7 +17,8 @@ namespace Infrastructure.DatabaseConfiguration
             builder
                 .HasMany(breed => breed.Pets)
                 .WithOne(pet => pet.Breed)
-                .HasForeignKey(pet => pet.BreedId);
+                .HasForeignKey(pet => pet.BreedId)
+                .IsRequired(false);
         }
     }
 }

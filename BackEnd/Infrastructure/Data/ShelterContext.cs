@@ -15,11 +15,11 @@ namespace Infrastructure.Data
 
         public ShelterContext(DbContextOptions<ShelterContext> options) : base(options) { }
 
-        public DbSet<Pet>? Pets { get; set; }
-        public DbSet<City>? Cities { get; set; }
-        public DbSet<Adress>? Adresses { get; set; }
-        public DbSet<Animals>? Animals { get; set; }
-        public DbSet<Breed>? Breeds { get; set; }
+        public DbSet<Pet> Pets => Set<Pet>();
+        public DbSet<City> Cities => Set<City>();
+        public DbSet<Adress> Adresses => Set<Adress>();
+        public DbSet<Animals> Animals => Set<Animals>();
+        public DbSet<Breed> Breeds => Set<Breed>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

@@ -7,6 +7,6 @@ namespace Core.Enitites
 {
     public record BaseEntity
     {
-        public int Id {get; init;}
+        public required int Id {get; init;}
     }
 }

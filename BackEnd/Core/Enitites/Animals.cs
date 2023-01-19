@@ -7,8 +7,8 @@ namespace Core.Enitites
 {
     public record Animals : BaseEntity
     {
-        public string CollectionName { get; init; } = string.Empty;
-        public IEnumerable<Breed>? Breeds {get; init;}
+        public required string CollectionName { get; init; }
+        public required IEnumerable<Breed> Breeds {get; init;}
 
         public List<string> GetBreedsList()
         {

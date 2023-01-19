@@ -8,19 +8,19 @@ namespace Core.Enitites
 {
     public record Pet : BaseEntity
     {
-        public string Name { get; init; } = string.Empty;
-        public string PictureUrl { get; init; } = string.Empty;
-        public int Age { get; init; } = 1;
-        public string Gender { get; init; } = string.Empty;
-        public string Color { get; init; } = string.Empty;
+        public required string Name { get; init; }
+        public required string PictureUrl { get; init; }
+        public required int Age { get; init; }
+        public required string Gender { get; init; }
+        public required string Color { get; init; }
         public bool? HasVaccines { get; init; } = false;
-        public string? Description { get; init; } = string.Empty;
+        public string? Description { get; init; }
 
-        public Adress? Adress { get; init; }
-        public int? AdressId { get; init; }
+        public required Adress Adress { get; init; }
+        public required int? AdressId { get; init; }
 
         //Navigation properties
-        public Breed Breed { get; init; } = default!;
-        public int BreedId { get; init; }
+        public required Breed Breed { get; init; }
+        public required int BreedId { get; init; }
     }
 }

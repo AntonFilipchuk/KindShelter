@@ -24,11 +24,11 @@ namespace API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<PetDTO>>> GetAllPets()
+        public async Task<ActionResult<IEnumerable<PetDTO>>> GetAllPets(
+            [FromQuery] PetSpecificationParameters parameters
+        )
         {
-            var petParams = new PetSpecificationParameters();
-            petParams.BreedId = 1;
-            var spec = new PetsWithLocationAndBreedSpecification(petParams);
+            var spec = new PetsWithLocationAndBreedSpecification(parameters);
             var pets = await _repository.ListAsync(spec);
             return ReturnMappedCollection<Pet, PetDTO>(pets);
         }

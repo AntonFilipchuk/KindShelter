@@ -74,8 +74,7 @@ namespace Infrastructure.Data.Migraions
                         name: "FK_Adresses_Cities_CityId",
                         column: x => x.CityId,
                         principalTable: "Cities",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateTable(
@@ -106,8 +105,7 @@ namespace Infrastructure.Data.Migraions
                         name: "FK_Pets_Breeds_BreedId",
                         column: x => x.BreedId,
                         principalTable: "Breeds",
-                        principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        principalColumn: "Id");
                 });
 
             migrationBuilder.CreateIndex(

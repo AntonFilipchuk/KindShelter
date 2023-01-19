@@ -330,6 +330,7 @@ BaseController:
 
             return Ok(mappedCollection);
         }
+
 Добавляем endPoint`ы:
 
         [HttpGet("pets")]

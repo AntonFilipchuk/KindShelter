@@ -11,16 +11,20 @@ namespace Core.Specifications
     public class PetsWithLocationAndBreedSpecification : BaseSpecification<Pet>
     {
         public PetsWithLocationAndBreedSpecification(PetSpecificationParameters parameters)
-            : base(SetFilter(parameters))
+            : base(SetFilters(parameters))
         {
-            //TODO: null check
-            AddInclude(p => p.Breed!.Animals!);
-            AddInclude(p => p.Adress!.City);
+            AddInclude(p => p.Breed.Animals);
+            AddInclude(p => p.Adress.City);
         }
 
-        private static Expression<Func<Pet, bool>> SetFilter(PetSpecificationParameters parameters)
+        private static Expression<Func<Pet, bool>> SetFilters(PetSpecificationParameters parameters)
         {
-            return p => p.BreedId == parameters.BreedId;
+            return p =>
+                (!parameters.BreedId.HasValue || p.BreedId == parameters.BreedId)
+                && (
+                    !parameters.CityId.HasValue
+                    || (p.Adress == null ? false : p.Adress.CityId == parameters.CityId)
+                );
         }
     }
 }

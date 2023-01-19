@@ -21,6 +21,7 @@ namespace API.DTOs
         public string Color { get; init; } = string.Empty;
         public string Breed { get; init; } = string.Empty;
         public string AnimalType { get; init; } = string.Empty;
+        public string Description { get; init; } = string.Empty;
         public PetAdressDTO Adress { get; private set; }
     }
 }

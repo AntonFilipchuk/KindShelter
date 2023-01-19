@@ -12,7 +12,7 @@ namespace Core.Enitites
         public int? FlatNumber { get; init; }
 
         //Navigation properties
-        public City City {get; init;} = default!;
-        public int CityId {get; init;}
+        public required City City {get; init;}
+        public required int CityId {get; init;}
     }
 }

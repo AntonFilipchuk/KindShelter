@@ -7,8 +7,8 @@ namespace Core.Enitites
 {
     public record City : BaseEntity
     {
-        public string CityName { get; init; } = string.Empty;
-        public List<Adress>? Adresses { get; init; }
+        public required string CityName { get; init; }
+        public required IEnumerable<Adress> Adresses { get; init; }
 
         public int GetNumberOfAdresses()
         {

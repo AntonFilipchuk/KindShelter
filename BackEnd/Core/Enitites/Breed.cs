@@ -8,13 +8,12 @@ namespace Core.Enitites
 {
     public record Breed : BaseEntity
     {
-        public string BreedName { get; init; } = string.Empty;
-        public IEnumerable<Pet>? Pets { get; init; }
+        public required string BreedName { get; init; }
+        public required IEnumerable<Pet> Pets { get; init; }
 
         //Navigation Properties
-        public Animals Animals { get; init; } = default!;
-        public int AnimalsId { get; init; }
-        //
+        public required Animals Animals { get; init; }
+        public required int AnimalsId { get; init; }
 
         public int GetNumberOfPets()
         {

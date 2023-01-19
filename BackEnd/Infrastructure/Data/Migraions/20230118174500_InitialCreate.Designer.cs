@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migraions
 {
     [DbContext(typeof(ShelterContext))]
-    [Migration("20230118150844_InitialCreate")]
+    [Migration("20230118174500_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -147,9 +147,7 @@ namespace Infrastructure.Data.Migraions
                 {
                     b.HasOne("Core.Enitites.City", "City")
                         .WithMany("Adresses")
-                        .HasForeignKey("CityId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("CityId");
 
                     b.Navigation("City");
                 });
@@ -173,9 +171,7 @@ namespace Infrastructure.Data.Migraions
 
                     b.HasOne("Core.Enitites.Breed", "Breed")
                         .WithMany("Pets")
-                        .HasForeignKey("BreedId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("BreedId");
 
                     b.Navigation("Adress");
 

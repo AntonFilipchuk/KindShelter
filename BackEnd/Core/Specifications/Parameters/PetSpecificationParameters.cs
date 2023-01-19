@@ -17,6 +17,7 @@ namespace Core.Specifications.Parameters
             set { _pageSize = (value > MaxPageSize) ? MaxPageSize : value; }
         }
 
-        public int? BreedId { get; set; }      
+        public int? BreedId { get; set; } 
+        public int? CityId {get; set;}     
     }
 }
