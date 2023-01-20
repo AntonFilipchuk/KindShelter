@@ -3,11 +3,13 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Enitites;
+using Core.Helpers;
 
 namespace Core.Interfaces
 {
     public interface IGenericRepository<T> where T : BaseEntity
     {
-        Task<IEnumerable<T>> ListAsync(ISpecification<T> specification);
+        Task<DataForPagination<T>> GetEntitiesBySpecForPaginationAsync(ISpecification<T> specification);
+        Task<T?> GetEntityBySpec(ISpecification<T> specification);
     }
 }

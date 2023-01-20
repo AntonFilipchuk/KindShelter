@@ -9,7 +9,8 @@ namespace Core.Specifications
 {
     public class BaseSpecification<T> : ISpecification<T>
     {
-        public BaseSpecification() { 
+        public BaseSpecification()
+        {
             Criteria = (t) => false;
         }
 
@@ -22,6 +23,19 @@ namespace Core.Specifications
 
         public List<Expression<Func<T, object>>> Includes { get; } =
             new List<Expression<Func<T, object>>>();
+
+        public int Take { get; private set; }
+
+        public int Skip { get; private set; }
+
+        public bool IsPaginEnabled { get; private set; }
+
+        protected void ApplyPaging(int skip, int take)
+        {
+            Skip = skip;
+            Take = take;
+            IsPaginEnabled = true;
+        }
 
         protected void AddInclude(Expression<Func<T, object>> includeExpression)
         {

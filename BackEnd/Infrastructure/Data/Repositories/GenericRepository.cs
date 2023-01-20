@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Enitites;
+using Core.Helpers;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -17,12 +18,18 @@ namespace Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public async Task<IEnumerable<T>> ListAsync(ISpecification<T> specification)
+        public async Task<DataForPagination<T>> GetEntitiesBySpecForPaginationAsync(ISpecification<T> specification)
         {
-            return await ApplySpecification(specification).ToListAsync();
+            QueryWithAdditionalDataAfterSpecification<T> data =  ApplySpecification(specification);
+            return new DataForPagination<T>(data.NumberOfSpecifiedObjectsInDB, await data.Query.ToListAsync());
         }
 
-        private IQueryable<T> ApplySpecification(ISpecification<T> specification)
+        public async Task<T?> GetEntityBySpec(ISpecification<T> specification)
+        {
+            return await ApplySpecification(specification).Query.FirstOrDefaultAsync();
+        } 
+
+        private QueryWithAdditionalDataAfterSpecification<T> ApplySpecification(ISpecification<T> specification)
         {
             return SpecificationEvaluator<T>.GetQuery(
                 _context.Set<T>().AsQueryable(),

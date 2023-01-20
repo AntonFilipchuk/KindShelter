@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Core.Enitites;
 
-namespace API.DTOs
+namespace API.ReturnObjects.DTOs
 {
     public record PetAdressDTO
     {

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Core.Enitites;
+using Core.Helpers;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
 
@@ -10,13 +11,13 @@ namespace Infrastructure.Data
 {
     public class SpecificationEvaluator<T> where T : BaseEntity
     {
-        public static IQueryable<T> GetQuery(
+        public static QueryWithAdditionalDataAfterSpecification<T> GetQuery(
             IQueryable<T> inputQuery,
             ISpecification<T> specification
         )
         {
             IQueryable<T> query = inputQuery;
-
+            int numberOfSpecifiedObjectsInDB = 0;
             if (specification.Criteria is not null)
             {
                 query = query.Where(specification.Criteria);
@@ -26,13 +27,15 @@ namespace Infrastructure.Data
                 query,
                 (current, include) => current.Include(include)
             );
+            numberOfSpecifiedObjectsInDB = query.Count();
 
-            return query;
-        }
 
-        internal static IQueryable<T> GetQuery(object value)
-        {
-            throw new NotImplementedException();
+            if (specification.IsPaginEnabled)
+            {
+                query = query.Skip(specification.Skip).Take(specification.Take);
+            }
+
+            return new QueryWithAdditionalDataAfterSpecification<T>(numberOfSpecifiedObjectsInDB, query);
         }
     }
 }
