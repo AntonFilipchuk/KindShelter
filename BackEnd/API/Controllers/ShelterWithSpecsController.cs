@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.ReturnObjects.DTOs;
 using AutoMapper;
-using Core.Enitites;
+using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
 using Core.Specifications;

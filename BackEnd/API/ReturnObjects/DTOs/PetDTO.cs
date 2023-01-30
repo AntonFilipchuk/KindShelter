@@ -1,27 +1,16 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Enitites;
-
 namespace API.ReturnObjects.DTOs
 {
     public record PetDTO : BaseDTO
     {
-        public PetDTO(Adress? adress)
-        {
-            Adress = new PetAdressDTO(adress);
-        }
-
-        public string Name { get; init; } = string.Empty;
-        public bool? HasVaccines { get; init; } = null;
-        public string PictureUrl { get; init; } = string.Empty;
+        public required string Name { get; init; }
+        public decimal Price { get; init; }
+        public required string PictureUrl { get; init; }
         public int Age { get; init; } = 1;
-        public string Gender { get; init; } = string.Empty;
-        public string Color { get; init; } = string.Empty;
-        public string Breed { get; init; } = string.Empty;
-        public string AnimalType { get; init; } = string.Empty;
-        public string Description { get; init; } = string.Empty;
-        public PetAdressDTO Adress { get; private set; }
+        public required string Gender { get; init; }
+        public required string Color { get; init; }
+        public required string Breed { get; init; }
+        public required string Animal { get; init; }
+        public string? Description { get; init; }
+        public bool? HasVaccines { get; init; } = false;
     }
 }

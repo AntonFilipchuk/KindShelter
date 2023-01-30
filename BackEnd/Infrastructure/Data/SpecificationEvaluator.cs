@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Enitites;
+using Core.Entities;
 using Core.Helpers;
 using Core.Interfaces;
 using Microsoft.EntityFrameworkCore;
@@ -30,7 +26,7 @@ namespace Infrastructure.Data
             numberOfSpecifiedObjectsInDB = query.Count();
 
 
-            if (specification.IsPaginEnabled)
+            if (specification.IsPagingEnabled)
             {
                 query = query.Skip(specification.Skip).Take(specification.Take);
             }

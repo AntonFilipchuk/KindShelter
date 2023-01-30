@@ -1,8 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Enitites;
+using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
@@ -14,18 +10,18 @@ namespace Infrastructure.DatabaseConfiguration
         {
             builder.Property(pet => pet.Id).IsRequired();
             builder.Property(pet => pet.Name).IsRequired();
+            builder.Property(pet => pet.Price).IsRequired();
             builder.Property(pet => pet.Age).IsRequired();
             builder.Property(pet => pet.Color).IsRequired();
             builder.Property(pet => pet.Gender).IsRequired();
             builder.Property(pet => pet.PictureUrl).IsRequired();
             builder.Property(pet => pet.HasVaccines).IsRequired(false);
             builder.Property(pet => pet.Description).IsRequired(false);
-            builder.Property(pet => pet.AdressId).IsRequired(false);
-            builder
-                .HasOne(pet => pet.Adress)
-                .WithOne()
-                .HasForeignKey<Pet>(p => p.AdressId)
-                .IsRequired(false);
+
+            builder.HasOne(pet => pet.Breed)
+                .WithMany(breed => breed.Pets)
+                .IsRequired();
+
         }
     }
 }

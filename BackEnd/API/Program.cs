@@ -1,9 +1,9 @@
-using System.Text.Json.Serialization;
 using API.Mapper;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Microsoft.EntityFrameworkCore;
+using System.Text.Json.Serialization;
 
 internal class Program
 {
@@ -52,10 +52,8 @@ internal class Program
 
         services.AddAutoMapper(
             typeof(PetMapProfile),
-            typeof(CityMapProfile),
-            typeof(AdressMapProfile),
-            typeof(BreedMapProfile),
-            typeof(AnimalMapProfile)
+            typeof(ProductMapProfile),
+            typeof(BreedMapProfile)
         );
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
@@ -79,8 +77,6 @@ internal class Program
         {
             var services = scope.ServiceProvider;
             var context = services.GetRequiredService<ShelterContext>();
-            ShelterContextRandomSeed scr = new ShelterContextRandomSeed(context);
-            scr.RandomSeed();
         }
     }
 }

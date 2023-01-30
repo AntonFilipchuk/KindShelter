@@ -1,21 +1,19 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Linq.Expressions;
-using System.Threading.Tasks;
-using Core.Enitites;
-using Core.Specifications.Helpers;
+using Core.Entities;
 using Core.Specifications.Parameters;
+using System.Linq.Expressions;
 
 namespace Core.Specifications
 {
     public class PetsWithLocationAndBreedSpecification : BaseSpecification<Pet>
     {
         public PetsWithLocationAndBreedSpecification(PetSpecificationParameters parameters)
-            : base(SetFilters(parameters))
+            : base(
+                p =>
+                    (parameters.BreedId == null || p.BreedId == parameters.BreedId)
+                    && (parameters.AnimalsId == null || p.Breed.AnimalId == parameters.AnimalsId)
+            )
         {
-            AddInclude(p => p.Breed.Animals);
-            AddInclude(p => p.Adress.City);
+            AddInclude(p => p.Breed.Animal);
 
             //Page:1
             //PageSize:5
@@ -25,35 +23,6 @@ namespace Core.Specifications
             // 5 * (1 - 1) = 0, so we skip 0 at first page
             // 5 * (2 - 1) = 5 - we skip 5 objects
             ApplyPaging(parameters.PageSize * (parameters.PageIndex - 1), parameters.PageSize);
-        }
-
-        private static Expression<Func<Pet, bool>> SetFilters(PetSpecificationParameters parameters)
-        {
-            // return p =>
-            //     CriteriaConfigurationHelper.IfHasParameter(p.BreedId, parameters.BreedId)
-            //     && CriteriaConfigurationHelper.IfHasParameter(p.Adress.CityId, parameters.CityId)
-            //     && CriteriaConfigurationHelper.IfHasParameter(
-            //         p.Breed.AnimalsId,
-            //         parameters.AnimalsId
-            //     )
-            //     && CriteriaConfigurationHelper.IfHasParameter(p.Name, parameters.Search);
-
-
-            return expr;
-        }
-
-        private static Func<Pet, bool> Bar = O;
-
-        private static bool O(Pet p)
-        {
-            return false;
-        }
-
-        static Expression<Func<Pet, bool>> expr = p => Foo(p, 12);
-
-        private static bool Foo(Pet p, int a)
-        {
-            return p.BreedId == a;
         }
     }
 }

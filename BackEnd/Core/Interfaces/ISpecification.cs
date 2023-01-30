@@ -13,6 +13,6 @@ namespace Core.Interfaces
 
         int Take { get; }
         int Skip { get; }
-        bool IsPaginEnabled { get; }
+        bool IsPagingEnabled { get; }
     }
 }

@@ -2,7 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
-using Core.Enitites;
+using Core.Entities;
 using Core.Helpers;
 
 namespace Core.Interfaces

@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.ReturnObjects.DTOs;
 using AutoMapper;
-using Core.Enitites;
+using Core.Entities;
 
 namespace API.Mapper
 {
@@ -13,19 +9,13 @@ namespace API.Mapper
         public PetMapProfile()
         {
             CreateMap<Pet, PetDTO>()
-                .ConstructUsing(
-                    pet =>
-                        new PetDTO(
-                            pet.Adress
-                        )
-                )
                 .ForMember(
                     petDto => petDto.Breed,
-                    options => options.MapFrom(pet => pet.Breed!.BreedName)
+                    options => options.MapFrom(pet => pet.Breed.BreedName)
                 )
                 .ForMember(
-                    petDto => petDto.AnimalType,
-                    options => options.MapFrom(pet => pet.Breed!.Animals!.CollectionName)
+                    petDto => petDto.Animal,
+                    options => options.MapFrom(pet => pet.Breed.Animal.AnimalName)
                 );
         }
     }

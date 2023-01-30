@@ -1,23 +1,14 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core.Enitites;
+using Core.Entities;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace Infrastructure.DatabaseConfiguration
 {
-    public class AnimalConfiguration : IEntityTypeConfiguration<Animals>
+    public class AnimalConfiguration : IEntityTypeConfiguration<Animal>
     {
-        public void Configure(EntityTypeBuilder<Animals> builder)
+        public void Configure(EntityTypeBuilder<Animal> builder)
         {
-            builder.Property(animal => animal.CollectionName).IsRequired();
-            builder
-                .HasMany(animal => animal.Breeds)
-                .WithOne(breed => breed.Animals)
-                .HasForeignKey(breed => breed.AnimalsId)
-                .IsRequired();
+            builder.Property(animal => animal.AnimalName).IsRequired();
         }
     }
 }

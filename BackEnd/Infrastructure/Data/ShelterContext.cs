@@ -1,9 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Core;
-using Core.Enitites;
+using Core.Entities;
 using Infrastructure.DatabaseConfiguration;
 using Microsoft.EntityFrameworkCore;
 
@@ -16,10 +11,11 @@ namespace Infrastructure.Data
         public ShelterContext(DbContextOptions<ShelterContext> options) : base(options) { }
 
         public DbSet<Pet> Pets => Set<Pet>();
-        public DbSet<City> Cities => Set<City>();
-        public DbSet<Adress> Adresses => Set<Adress>();
-        public DbSet<Animals> Animals => Set<Animals>();
+        public DbSet<Animal> Animals => Set<Animal>();
         public DbSet<Breed> Breeds => Set<Breed>();
+        public DbSet<Brand> Brands => Set<Brand>();
+        public DbSet<Product> Products => Set<Product>();
+        public DbSet<ProductType> ProductTypes => Set<ProductType>();
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -27,8 +23,9 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new PetConfiguration());
             modelBuilder.ApplyConfiguration(new AnimalConfiguration());
             modelBuilder.ApplyConfiguration(new BreedConfiguration());
-            modelBuilder.ApplyConfiguration(new CityConfiguration());
-            modelBuilder.ApplyConfiguration(new AdressConfiguration());
+            modelBuilder.ApplyConfiguration(new BrandConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductConfiguration());
+            modelBuilder.ApplyConfiguration(new ProductTypeConfiguration());
         }
     }
 }

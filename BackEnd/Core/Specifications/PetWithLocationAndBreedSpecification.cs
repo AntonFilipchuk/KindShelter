@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
-using Core.Enitites;
+using Core.Entities;
 
 namespace Core.Specifications
 {
@@ -11,7 +11,7 @@ namespace Core.Specifications
     {
         public PetWithLocationAndBreedSpecification(int id) : base(x => x.Id == id)
         {
-            AddInclude(p => p.Breed.Animals);
+            AddInclude(p => p.Breed.Animal);
         }
 
         

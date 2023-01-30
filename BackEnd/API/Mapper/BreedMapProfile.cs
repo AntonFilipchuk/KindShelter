@@ -1,10 +1,6 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using API.ReturnObjects.DTOs;
 using AutoMapper;
-using Core.Enitites;
+using Core.Entities;
 
 namespace API.Mapper
 {
@@ -14,8 +10,8 @@ namespace API.Mapper
         {
             CreateMap<Breed, BreedDTO>()
                 .ForMember(
-                    breedDto => breedDto.AnimalCollectionName,
-                    options => options.MapFrom(breed => breed.Animals!.CollectionName)
+                    breedDto => breedDto.Animal,
+                    options => options.MapFrom(breed => breed.Animal.AnimalName)
                 )
                 .ForMember(
                     breedDto => breedDto.NumberOfPets,

@@ -19,7 +19,6 @@ namespace Core.Specifications.Parameters
         }
 
         public int? BreedId { get; set; }
-        public int? CityId { get; set; }
         public int? AnimalsId { get; set; }
 
         private string? _search;

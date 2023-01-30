@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using API.ReturnObjects.DTOs;
 using AutoMapper;
-using Core.Enitites;
+using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
@@ -37,15 +37,15 @@ namespace API.Controllers
         }
 
         [HttpGet("animals")]
-        public async Task<ActionResult<IEnumerable<AnimalsDTO>>> GetAnimals()
+        public async Task<ActionResult<IEnumerable<AnimalDTO>>> GetAnimals()
         {
-            return ReturnMappedCollection<Animals, AnimalsDTO>(await _repository.GetAnimalsAsync());
+            return ReturnMappedCollection<Animal, AnimalDTO>(await _repository.GetAnimalsAsync());
         }
 
         [HttpGet("animals/{id}")]
-        public async Task<ActionResult<AnimalsDTO>> GetAnimalsById(int id)
+        public async Task<ActionResult<AnimalDTO>> GetAnimalsById(int id)
         {
-            return ReturnMappedObject<Animals, AnimalsDTO>(
+            return ReturnMappedObject<Animal, AnimalDTO>(
                 await _repository.GetAnimalsByIdAsync(id)
             );
         }
