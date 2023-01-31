@@ -11,11 +11,11 @@ namespace API.Mapper
             CreateMap<Pet, PetDTO>()
                 .ForMember(
                     petDto => petDto.Breed,
-                    options => options.MapFrom(pet => pet.Breed.BreedName)
+                    options => options.MapFrom(pet => pet.Breed!.BreedName)
                 )
                 .ForMember(
                     petDto => petDto.Animal,
-                    options => options.MapFrom(pet => pet.Breed.Animal.AnimalName)
+                    options => options.MapFrom(pet => pet.Breed!.Animal!.AnimalName)
                 );
         }
     }

@@ -11,7 +11,7 @@ namespace API.Mapper
             CreateMap<Breed, BreedDTO>()
                 .ForMember(
                     breedDto => breedDto.Animal,
-                    options => options.MapFrom(breed => breed.Animal.AnimalName)
+                    options => options.MapFrom(breed => breed.Animal!.AnimalName)
                 )
                 .ForMember(
                     breedDto => breedDto.NumberOfPets,

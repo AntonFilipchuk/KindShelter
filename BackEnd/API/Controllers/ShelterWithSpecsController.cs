@@ -15,12 +15,18 @@ namespace API.Controllers
 {
     public class ShelterWithSpecsController : BaseController
     {
-        private readonly IGenericRepository<Pet> _repository;
+        private readonly IGenericRepository<Pet> _petRepository;
+        private readonly IGenericRepository<Product> _productRepository;
         private IMapper _mapper;
 
-        public ShelterWithSpecsController(IGenericRepository<Pet> repository, IMapper mapper)
+        public ShelterWithSpecsController(
+            IGenericRepository<Pet> petRepository,
+            IGenericRepository<Product> productRepository,
+            IMapper mapper
+        )
         {
-            _repository = repository;
+            _petRepository = petRepository;
+            _productRepository = productRepository;
             _mapper = mapper;
         }
 
@@ -30,9 +36,8 @@ namespace API.Controllers
         )
         {
             var spec = new PetsWithLocationAndBreedSpecification(parameters);
-            DataForPagination<Pet> petsData = await _repository.GetEntitiesBySpecForPaginationAsync(
-                spec
-            );
+            DataForPagination<Pet> petsData =
+                await _petRepository.GetEntitiesBySpecForPaginationAsync(spec);
 
             return ReturnMappedCollection<Pet, PetDTO>(petsData, parameters);
         }
@@ -41,9 +46,37 @@ namespace API.Controllers
         public async Task<ActionResult<PetDTO>> GetPetByIdAsync(int id)
         {
             var spec = new PetWithLocationAndBreedSpecification(id);
-            Pet? pet = await _repository.GetEntityBySpec(spec);
+            Pet? pet = await _petRepository.GetEntityBySpec(spec);
             return ReturnMappedObject<Pet, PetDTO>(pet);
         }
+
+        [HttpGet("products")]
+        public async Task<ActionResult<Pagination<ProductDTO>>> GetAllProducts(
+            [FromQuery] ProductSpecificationParameters parameters
+        )
+        {
+            var spec = new ProductsWithProductTypeAndBrandSpecification(parameters);
+            DataForPagination<Product> productsData =
+                await _productRepository.GetEntitiesBySpecForPaginationAsync(spec);
+
+            return ReturnMappedCollection<Product, ProductDTO>(productsData, parameters);
+        }
+
+        [HttpGet("products/{id}")]
+        public async Task<ActionResult<ProductDTO>> GetProductByIdAsync(int id)
+        {
+            var spec = new ProductWithProductTypeAndBrandSpecification(id);
+            Product? product = await _productRepository.GetEntityBySpec(spec);
+            return ReturnMappedObject<Product, ProductDTO>(product);
+        }
+
+        // [HttpPost]
+        // public async Task<ActionResult<ProductDTO>> PostProduct(
+        //     [FromBody] ProductToAddDTO productToAddDTO
+        // )
+        // {
+        //     await _productRepository.AddEntity()
+        // }
 
         private ActionResult<TOut> ReturnMappedObject<TIn, TOut>(in TIn? item)
             where TIn : BaseEntity

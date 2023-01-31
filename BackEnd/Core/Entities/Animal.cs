@@ -3,9 +3,10 @@ namespace Core.Entities
     public record Animal : BaseEntity
     {
         public required string AnimalName { get; init; }
-        public required IEnumerable<Breed> Breeds { get; init; }
+        public IEnumerable<Breed>? Breeds { get; init; }
 
         public IEnumerable<Product>? Products { get; set; }
+        public IEnumerable<AnimalProduct>? AnimalProducts { get; init; }
 
         public List<string> GetBreedsList()
         {
@@ -20,6 +21,5 @@ namespace Core.Entities
             }
             return breeds;
         }
-
     }
 }

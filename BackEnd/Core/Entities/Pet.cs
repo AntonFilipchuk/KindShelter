@@ -12,7 +12,7 @@ namespace Core.Entities
         public string? Description { get; init; }
 
         //Navigation properties
-        public required Breed Breed { get; init; }
+        public Breed? Breed { get; init; }
         public required int BreedId { get; init; }
     }
 }

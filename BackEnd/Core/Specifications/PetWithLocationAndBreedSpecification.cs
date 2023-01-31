@@ -11,7 +11,7 @@ namespace Core.Specifications
     {
         public PetWithLocationAndBreedSpecification(int id) : base(x => x.Id == id)
         {
-            AddInclude(p => p.Breed.Animal);
+            AddInclude(p => p.Breed!.Animal!);
         }
 
         

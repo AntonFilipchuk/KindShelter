@@ -10,10 +10,10 @@ namespace Core.Specifications
             : base(
                 p =>
                     (parameters.BreedId == null || p.BreedId == parameters.BreedId)
-                    && (parameters.AnimalsId == null || p.Breed.AnimalId == parameters.AnimalsId)
+                    && (parameters.AnimalsId == null || p.Breed!.AnimalId == parameters.AnimalsId)
             )
         {
-            AddInclude(p => p.Breed.Animal);
+            AddInclude(p => p.Breed!.Animal!);
 
             //Page:1
             //PageSize:5

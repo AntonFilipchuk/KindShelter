@@ -11,5 +11,6 @@ namespace Core.Interfaces
     {
         Task<DataForPagination<T>> GetEntitiesBySpecForPaginationAsync(ISpecification<T> specification);
         Task<T?> GetEntityBySpec(ISpecification<T> specification);
+        Task<T?> AddEntity(T entity);
     }
 }

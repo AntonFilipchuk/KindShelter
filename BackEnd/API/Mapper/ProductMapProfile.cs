@@ -11,10 +11,10 @@ namespace API.Mapper
             CreateMap<Product, ProductDTO>()
                 .ForMember
                 (productDTO => productDTO.ProductType,
-                options => options.MapFrom(product => product.ProductType.ProductTypeName))
+                options => options.MapFrom(product => product.ProductType!.ProductTypeName))
                 .ForMember
                 (productDTO => productDTO.Brand,
-                options => options.MapFrom(product => product.Brand.BrandName));
+                options => options.MapFrom(product => product.Brand!.BrandName));
         }
     }
 }

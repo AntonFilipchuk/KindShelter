@@ -12,12 +12,32 @@ namespace Infrastructure.DatabaseConfiguration
             builder.Property(product => product.ProductQuantity).IsRequired();
             builder.Property(product => product.ProductPrice).IsRequired();
 
-            builder.HasOne(product => product.ProductType)
+            builder
+                .HasOne(product => product.ProductType)
                 .WithMany(productType => productType.Products)
                 .IsRequired();
-            builder.HasOne(product => product.Brand)
-                .WithMany(brand => brand.Products)
-                .IsRequired();
+            builder.HasOne(product => product.Brand).WithMany(brand => brand.Products).IsRequired();
+
+            //Configure many-to-many relationship
+            //Important: 1st to configure animal, 2nd - product
+            //https://learn.microsoft.com/en-us/ef/core/modeling/relationships?tabs=fluent-api%2Cfluent-api-simple-key%2Csimple-key
+            builder
+                .HasMany(p => p.Animals)
+                .WithMany(a => a.Products)
+                .UsingEntity<AnimalProduct>(
+                    j =>
+                        j.HasOne(animalProduct => animalProduct.Animal)
+                            .WithMany(animal => animal.AnimalProducts)
+                            .HasForeignKey(animalProduct => animalProduct.AnimalId),
+                    j =>
+                        j.HasOne(animalProduct => animalProduct.Product)
+                            .WithMany(product => product.AnimalProducts)
+                            .HasForeignKey(animalProduct => animalProduct.ProductId),
+                    j =>
+                    {
+                        j.HasKey(t => new { t.AnimalId, t.ProductId });
+                    }
+                );
         }
     }
 }

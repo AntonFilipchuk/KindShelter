@@ -18,18 +18,42 @@ namespace Infrastructure.Data.Repositories
             _context = context;
         }
 
-        public async Task<DataForPagination<T>> GetEntitiesBySpecForPaginationAsync(ISpecification<T> specification)
+        public async Task<DataForPagination<T>> GetEntitiesBySpecForPaginationAsync(
+            ISpecification<T> specification
+        )
         {
-            QueryWithAdditionalDataAfterSpecification<T> data =  ApplySpecification(specification);
-            return new DataForPagination<T>(data.NumberOfSpecifiedObjectsInDB, await data.Query.ToListAsync());
+            QueryWithAdditionalDataAfterSpecification<T> data = ApplySpecification(specification);
+            return new DataForPagination<T>(
+                data.NumberOfSpecifiedObjectsInDB,
+                await data.Query.ToListAsync()
+            );
         }
 
         public async Task<T?> GetEntityBySpec(ISpecification<T> specification)
         {
             return await ApplySpecification(specification).Query.FirstOrDefaultAsync();
-        } 
+        }
 
-        private QueryWithAdditionalDataAfterSpecification<T> ApplySpecification(ISpecification<T> specification)
+        public async Task<T?> AddEntity(T entity)
+        {
+            //check if item with the same id exists
+            var item = _context
+                .Set<T>()
+                .Where(entityInSet => entityInSet.Id == entity.Id)
+                .SingleOrDefaultAsync();
+            
+            if(item is not null)
+            {
+                return null;
+            }
+            var result = await _context.Set<T>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+            return result.Entity;
+        }
+
+        private QueryWithAdditionalDataAfterSpecification<T> ApplySpecification(
+            ISpecification<T> specification
+        )
         {
             return SpecificationEvaluator<T>.GetQuery(
                 _context.Set<T>().AsQueryable(),

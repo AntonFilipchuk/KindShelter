@@ -26,6 +26,7 @@ namespace Infrastructure.Data
             modelBuilder.ApplyConfiguration(new BrandConfiguration());
             modelBuilder.ApplyConfiguration(new ProductConfiguration());
             modelBuilder.ApplyConfiguration(new ProductTypeConfiguration());
+            RandomSeeder seeder = new RandomSeeder(modelBuilder);
         }
     }
 }
