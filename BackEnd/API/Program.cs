@@ -1,8 +1,11 @@
+using API.Errors;
 using API.Mapper;
+using API.Middleware;
 using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System.Text.Json.Serialization;
 
@@ -13,13 +16,12 @@ internal class Program
         WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
         IServiceCollection services = builder.Services;
 
-        services.AddControllers();
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen();
-
         ConfigureServices(ref services, in builder);
 
         var app = builder.Build();
+
+        //Middleware for catching internal 500 errors
+        app.UseMiddleware<ExceptionMiddleware>();
 
         if (app.Environment.IsDevelopment())
         {
@@ -27,10 +29,14 @@ internal class Program
             app.UseSwaggerUI();
         }
 
+        //Middleware for handling errors
+        app.UseStatusCodePagesWithReExecute("/errors/{0}");
+
         app.UseHttpsRedirection();
         app.UseRouting();
         //To display images
         app.UseStaticFiles();
+
         app.UseCors("CorsPolicy");
 
         app.UseAuthorization();
@@ -45,14 +51,18 @@ internal class Program
         in WebApplicationBuilder builder
     )
     {
-        services
-            .AddControllers()
-            .AddJsonOptions(options =>
-            {
-                options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
-                options.JsonSerializerOptions.WriteIndented = true;
-            });
-        ;
+        services.AddControllers();
+        services.AddEndpointsApiExplorer();
+        services.AddSwaggerGen();
+
+        // services
+        //     .AddControllers()
+        //     .AddJsonOptions(options =>
+        //     {
+        //         options.JsonSerializerOptions.ReferenceHandler = ReferenceHandler.IgnoreCycles;
+        //         options.JsonSerializerOptions.WriteIndented = true;
+        //     });
+        // ;
 
         services.AddAutoMapper(
             typeof(PetMapProfile),
@@ -74,5 +84,23 @@ internal class Program
 
         services.AddScoped<IShelterRepository, ShelterRepository>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
+
+
+        //Override behavior for handling 400 errors
+        //products/f -> 400 error
+        services.Configure<ApiBehaviorOptions>(options =>
+        {
+            options.InvalidModelStateResponseFactory = actionContext =>
+            {
+                var errors = actionContext.ModelState
+                    .Where(errors => errors.Value!.Errors.Count > 0)
+                    .SelectMany(x => x.Value!.Errors)
+                    .Select(x => x.ErrorMessage)
+                    .ToArray();
+
+                var errorResponse = new ApiValidationErrorResponse() { Errors = errors };
+                return new BadRequestObjectResult(errorResponse);
+            };
+        });
     }
 }
