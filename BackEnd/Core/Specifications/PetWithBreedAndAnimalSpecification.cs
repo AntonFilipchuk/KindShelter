@@ -13,7 +13,5 @@ namespace Core.Specifications
         {
             AddInclude(p => p.Breed!.Animal!);
         }
-
-        
     }
 }

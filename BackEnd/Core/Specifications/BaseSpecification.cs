@@ -5,33 +5,30 @@ namespace Core.Specifications
 {
     public class BaseSpecification<T> : ISpecification<T>
     {
-        public BaseSpecification()
-        {
-            Criteria = (t) => false;
-            //Check it
-            OrderBy = (t) => false;
-            OrderByDescending = (t) => false;
-        }
+        public BaseSpecification() { }
 
         public BaseSpecification(Expression<Func<T, bool>> criteria)
         {
             Criteria = criteria;
         }
 
-        public Expression<Func<T, bool>> Criteria { get; }
+        //Expression for .Where() linq method
+        public Expression<Func<T, bool>>? Criteria { get; }
 
+        //Expression for loading related entities 
         public List<Expression<Func<T, object>>> Includes { get; } =
             new List<Expression<Func<T, object>>>();
 
+        //How many entities to take for pagination
         public int Take { get; private set; }
-
+        //How many entities to skip for pagination
         public int Skip { get; private set; }
-
         public bool IsPagingEnabled { get; private set; }
 
-        public Expression<Func<T, object>> OrderBy { get; private set; }
+        //Type of ordering
+        public Expression<Func<T, object>>? OrderBy { get; private set; }
 
-        public Expression<Func<T, object>> OrderByDescending { get; private set; }
+        public Expression<Func<T, object>>? OrderByDescending { get; private set; }
 
         protected void ConfigureOrderBy(string? sort, Expression<Func<T, object>> orderExpression)
         {
@@ -52,12 +49,36 @@ namespace Core.Specifications
             }
         }
 
-        protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
+        //Overloaded version to specify a default sorting
+        protected void ConfigureOrderBy(
+            string? sort,
+            Expression<Func<T, object>> mainOrderExpression,
+            Expression<Func<T, object>> defaultOrderExpression
+        )
+        {
+            if (!string.IsNullOrEmpty(sort))
+            {
+                switch (sort)
+                {
+                    case "priceAsc":
+                        AddOrderBy(mainOrderExpression);
+                        break;
+                    case "priceDsc":
+                        AddOrderByDescending(mainOrderExpression);
+                        break;
+                    default:
+                        AddOrderBy(defaultOrderExpression);
+                        break;
+                }
+            }
+        }
+
+        private void AddOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
         }
 
-        protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
+        private void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
             OrderByDescending = orderByDescendingExpression;
         }

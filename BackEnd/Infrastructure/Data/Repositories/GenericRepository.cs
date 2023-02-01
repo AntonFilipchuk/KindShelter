@@ -22,15 +22,22 @@ namespace Infrastructure.Data.Repositories
             ISpecification<T> specification
         )
         {
-            QueryWithAdditionalDataAfterSpecification<T> data = ApplySpecification(specification);
+            QueryWithAdditionalDataAfterSpecification<T> queryWithAdditionalData =
+                ApplySpecification(specification);
             return new DataForPagination<T>(
-                data.NumberOfSpecifiedObjectsInDB,
-                await data.Query.ToListAsync()
+                queryWithAdditionalData.NumberOfSpecifiedObjectsInDB,
+                await queryWithAdditionalData.Query.ToListAsync()
             );
         }
 
         public async Task<T?> GetEntityBySpec(ISpecification<T> specification)
         {
+            QueryWithAdditionalDataAfterSpecification<T> queryWithAdditionalData =
+                ApplySpecification(specification);
+            if (queryWithAdditionalData.NumberOfSpecifiedObjectsInDB == 0)
+            {
+                return null;
+            }
             return await ApplySpecification(specification).Query.FirstOrDefaultAsync();
         }
 
@@ -41,8 +48,8 @@ namespace Infrastructure.Data.Repositories
                 .Set<T>()
                 .Where(entityInSet => entityInSet.Id == entity.Id)
                 .SingleOrDefaultAsync();
-            
-            if(item is not null)
+
+            if (item is not null)
             {
                 return null;
             }

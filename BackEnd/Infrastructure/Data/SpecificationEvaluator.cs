@@ -19,7 +19,13 @@ namespace Infrastructure.Data
             {
                 query = query.Where(specification.Criteria);
             }
+            
+            //Count number of specified entities for pagination
+            //Need to count them before ordering!
+            numberOfSpecifiedObjectsInDB = query.Count();
 
+
+            //Order specified entities
             if (specification.OrderBy is not null)
             {
                 query = query.OrderBy(specification.OrderBy);
@@ -39,7 +45,6 @@ namespace Infrastructure.Data
                 query,
                 (current, include) => current.Include(include)
             );
-            numberOfSpecifiedObjectsInDB = query.Count();
 
             return new QueryWithAdditionalDataAfterSpecification<T>(
                 numberOfSpecifiedObjectsInDB,
