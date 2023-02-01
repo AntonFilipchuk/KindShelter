@@ -8,5 +8,6 @@
         public decimal ProductPrice { get; init; }
         public required string ProductType { get; init; }
         public required string Brand { get; init; }
+        public required string PictureUrl { get; init; }
     }
 }

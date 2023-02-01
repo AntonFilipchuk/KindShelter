@@ -21,6 +21,9 @@ namespace Core.Specifications.Parameters
         public int? ProductTypeId { get; set; }
         public int? BrandId { get; set; }
 
+        //Type of sorting (asc/desc)
+        public string? Sort { get; set; }
+        
         private string? _search;
         public string? Search
         {

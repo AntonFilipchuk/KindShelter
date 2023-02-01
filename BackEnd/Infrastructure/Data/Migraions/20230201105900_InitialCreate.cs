@@ -80,7 +80,8 @@ namespace Infrastructure.Data.Migraions
                     ProductName = table.Column<string>(type: "TEXT", nullable: false),
                     ProductQuantity = table.Column<int>(type: "INTEGER", nullable: false),
                     ProductDescription = table.Column<string>(type: "TEXT", nullable: true),
-                    ProductPrice = table.Column<decimal>(type: "TEXT", nullable: false),
+                    ProductPrice = table.Column<double>(type: "REAL", nullable: false),
+                    PictureUrl = table.Column<string>(type: "TEXT", nullable: false),
                     ProductTypeId = table.Column<int>(type: "INTEGER", nullable: false),
                     BrandId = table.Column<int>(type: "INTEGER", nullable: false)
                 },
@@ -108,7 +109,7 @@ namespace Infrastructure.Data.Migraions
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    Price = table.Column<decimal>(type: "TEXT", nullable: false),
+                    Price = table.Column<double>(type: "REAL", nullable: false),
                     PictureUrl = table.Column<string>(type: "TEXT", nullable: false),
                     Age = table.Column<int>(type: "INTEGER", nullable: false),
                     Gender = table.Column<string>(type: "TEXT", nullable: false),
@@ -198,15 +199,15 @@ namespace Infrastructure.Data.Migraions
 
             migrationBuilder.InsertData(
                 table: "Products",
-                columns: new[] { "Id", "BrandId", "ProductDescription", "ProductName", "ProductPrice", "ProductQuantity", "ProductTypeId" },
+                columns: new[] { "Id", "BrandId", "PictureUrl", "ProductDescription", "ProductName", "ProductPrice", "ProductQuantity", "ProductTypeId" },
                 values: new object[,]
                 {
-                    { 1, 1, "Food for dogs", "Healthy Dog Food", 120m, 100, 1 },
-                    { 2, 2, "A toy for cats and dogs", "Colorful Ball", 100m, 50, 4 },
-                    { 3, 3, "A medicine for cats and dogs", "WormaKill", 500m, 150, 3 },
-                    { 4, 4, "A wooden house for a parrot cage", "Wooden house", 1000m, 15, 2 },
-                    { 5, 2, "A fish tank for 100 lites", "Fish Tank", 5000m, 8, 2 },
-                    { 6, 1, "A dry food for both cats and dogs", "Dry food", 200m, 500, 1 }
+                    { 1, 1, "images/products/dogFood.jpg", "Food for dogs", "Healthy Dog Food", 120.0, 100, 1 },
+                    { 2, 2, "images/products/colorfulBall.jpg", "A toy for cats and dogs", "Colorful Ball", 100.0, 50, 4 },
+                    { 3, 3, "images/products/wormaKill.jpg", "A medicine for cats and dogs", "WormaKill", 500.99000000000001, 150, 3 },
+                    { 4, 4, "images/products/woodenHouse.jpg", "A wooden house for a parrot cage", "Wooden house", 1000.0, 15, 2 },
+                    { 5, 2, "images/products/fishTank.jpg", "A fish tank for 100 lites", "Fish Tank", 4999.9899999999998, 8, 2 },
+                    { 6, 1, "images/products/dryFood.jpg", "A dry food for both cats and dogs", "Dry food", 200.0, 500, 1 }
                 });
 
             migrationBuilder.InsertData(
@@ -229,18 +230,18 @@ namespace Infrastructure.Data.Migraions
                 columns: new[] { "Id", "Age", "BreedId", "Color", "Description", "Gender", "HasVaccines", "Name", "PictureUrl", "Price" },
                 values: new object[,]
                 {
-                    { 1, 1, 1, "white", "Cat description", "female", true, "Lucy", "1", 2000m },
-                    { 2, 3, 1, "black", "Cat description", "male", false, "Snowflake", "2", 5000m },
-                    { 3, 5, 1, "orange", "Cat description", "male", true, "Bobby", "3", 1500m },
-                    { 4, 2, 2, "black", "Dog description", "male", true, "Shelton", "4", 500m },
-                    { 5, 1, 2, "white", "Dog description", "female", false, "Tess", "5", 200m },
-                    { 6, 3, 2, "yellow", "Dog description", "female", false, "Carina", "6", 2400m },
-                    { 7, 3, 3, "yellow", "Parrot description", "male", true, "Wendell", "7", 7000m },
-                    { 8, 6, 3, "white", "Parrot description", "female", true, "Dianna", "8", 6500m },
-                    { 9, 7, 3, "orange", "Parrot description", "female", false, "Kendra", "9", 3000m },
-                    { 10, 1, 4, "yellow", "Fish description", "female", null, "Delia", "10", 300m },
-                    { 11, 2, 4, "black", "Fish description", "male", null, "Bennie", "11", 500m },
-                    { 12, 1, 4, "black", "Fish description", "female", null, "Delia", "12", 1000m }
+                    { 1, 1, 1, "white", "Cat description", "female", true, "Lucy", "images/pets/whiteCat.jpg", 2000.0 },
+                    { 2, 3, 1, "black", "Cat description", "male", false, "Snowflake", "images/pets/blackCat.jpg", 5000.0 },
+                    { 3, 5, 1, "orange", "Cat description", "male", true, "Bobby", "images/pets/orangeCat.jpg", 1500.0 },
+                    { 4, 2, 2, "black", "Dog description", "male", true, "Shelton", "images/pets/blackDog.jpg", 500.0 },
+                    { 5, 1, 2, "white", "Dog description", "female", false, "Tess", "images/pets/whiteDog.jpg", 200.0 },
+                    { 6, 3, 2, "yellow", "Dog description", "female", false, "Carina", "images/pets/yellowDog.jpg", 2400.0 },
+                    { 7, 3, 3, "yellow", "Parrot description", "male", true, "Wendell", "images/pets/yellowParrot.jpg", 7000.0 },
+                    { 8, 6, 3, "white", "Parrot description", "female", true, "Dianna", "images/pets/whiteParrot.jpg", 6500.0 },
+                    { 9, 7, 3, "orange", "Parrot description", "female", false, "Kendra", "images/pets/orangeParrot.jpg", 3000.0 },
+                    { 10, 1, 4, "yellow", "Fish description", "female", null, "Delia", "images/pets/yellowFish.jpg", 300.0 },
+                    { 11, 2, 4, "black", "Fish description", "male", null, "Bennie", "images/pets/blackFish.jpg", 500.0 },
+                    { 12, 1, 4, "black", "Fish description", "female", null, "Delia", "images/pets/blackFish2.jpg", 1000.0 }
                 });
 
             migrationBuilder.CreateIndex(

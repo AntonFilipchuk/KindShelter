@@ -10,7 +10,10 @@ namespace Infrastructure.DatabaseConfiguration
         {
             builder.Property(product => product.ProductName).IsRequired();
             builder.Property(product => product.ProductQuantity).IsRequired();
-            builder.Property(product => product.ProductPrice).IsRequired();
+
+            //For SQlite ro correctly represent decimal values
+            //https://learn.microsoft.com/en-us/ef/core/providers/sqlite/limitations#query-limitations
+            builder.Property(product => product.ProductPrice).HasConversion<double>().IsRequired();
 
             builder
                 .HasOne(product => product.ProductType)

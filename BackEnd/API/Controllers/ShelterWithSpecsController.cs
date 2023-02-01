@@ -35,7 +35,7 @@ namespace API.Controllers
             [FromQuery] PetSpecificationParameters parameters
         )
         {
-            var spec = new PetsWithLocationAndBreedSpecification(parameters);
+            var spec = new PetsWithBreedAndAnimalSpecification(parameters);
             DataForPagination<Pet> petsData =
                 await _petRepository.GetEntitiesBySpecForPaginationAsync(spec);
 
@@ -45,7 +45,7 @@ namespace API.Controllers
         [HttpGet("pets/{id}")]
         public async Task<ActionResult<PetDTO>> GetPetByIdAsync(int id)
         {
-            var spec = new PetWithLocationAndBreedSpecification(id);
+            var spec = new PetWithBreedAndAnimalSpecification(id);
             Pet? pet = await _petRepository.GetEntityBySpec(spec);
             return ReturnMappedObject<Pet, PetDTO>(pet);
         }

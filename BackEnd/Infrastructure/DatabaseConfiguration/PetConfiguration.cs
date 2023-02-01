@@ -10,7 +10,11 @@ namespace Infrastructure.DatabaseConfiguration
         {
             builder.Property(pet => pet.Id).IsRequired();
             builder.Property(pet => pet.Name).IsRequired();
-            builder.Property(pet => pet.Price).IsRequired();
+            
+            //For SQlite ro correctly represent decimal values
+            //https://learn.microsoft.com/en-us/ef/core/providers/sqlite/limitations#query-limitations
+            builder.Property(pet => pet.Price).HasConversion<double>().IsRequired();
+            
             builder.Property(pet => pet.Age).IsRequired();
             builder.Property(pet => pet.Color).IsRequired();
             builder.Property(pet => pet.Gender).IsRequired();
@@ -18,10 +22,7 @@ namespace Infrastructure.DatabaseConfiguration
             builder.Property(pet => pet.HasVaccines).IsRequired(false);
             builder.Property(pet => pet.Description).IsRequired(false);
 
-            builder.HasOne(pet => pet.Breed)
-                .WithMany(breed => breed.Pets)
-                .IsRequired();
-
+            builder.HasOne(pet => pet.Breed).WithMany(breed => breed.Pets).IsRequired();
         }
     }
 }

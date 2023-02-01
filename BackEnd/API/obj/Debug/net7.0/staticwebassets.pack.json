@@ -1,0 +1,93 @@
+{
+  "Files": [
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\blackCat.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\blackCat.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\blackDog.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\blackDog.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\blackFish.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\blackFish.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\blackFish2.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\blackFish2.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\orangeCat.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\orangeCat.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\orangeParrot.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\orangeParrot.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\whiteCat.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\whiteCat.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\whiteDog.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\whiteDog.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\whiteParrot.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\whiteParrot.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\yellowDog.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\yellowDog.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\yellowFish.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\yellowFish.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\yellowParrot.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\yellowParrot.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\products\\colorfulBall.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\colorfulBall.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\products\\dogFood.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\dogFood.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\products\\dryFood.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\dryFood.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\products\\fishTank.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\fishTank.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\products\\woodenHouse.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\woodenHouse.jpg"
+    },
+    {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\products\\wormaKill.jpg",
+      "PackagePath": "staticwebassets\\images\\products\\wormaKill.jpg"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.API.Microsoft.AspNetCore.StaticWebAssets.props",
+      "PackagePath": "build\\Microsoft.AspNetCore.StaticWebAssets.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.build.API.props",
+      "PackagePath": "build\\API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildMultiTargeting.API.props",
+      "PackagePath": "buildMultiTargeting\\API.props"
+    },
+    {
+      "Id": "obj\\Debug\\net7.0\\staticwebassets\\msbuild.buildTransitive.API.props",
+      "PackagePath": "buildTransitive\\API.props"
+    }
+  ],
+  "ElementsToRemove": []
+}

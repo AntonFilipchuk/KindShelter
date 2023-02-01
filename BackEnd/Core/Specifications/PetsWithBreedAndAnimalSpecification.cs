@@ -4,13 +4,17 @@ using System.Linq.Expressions;
 
 namespace Core.Specifications
 {
-    public class PetsWithLocationAndBreedSpecification : BaseSpecification<Pet>
+    public class PetsWithBreedAndAnimalSpecification : BaseSpecification<Pet>
     {
-        public PetsWithLocationAndBreedSpecification(PetSpecificationParameters parameters)
+        public PetsWithBreedAndAnimalSpecification(PetSpecificationParameters parameters)
             : base(
                 p =>
                     (parameters.BreedId == null || p.BreedId == parameters.BreedId)
                     && (parameters.AnimalsId == null || p.Breed!.AnimalId == parameters.AnimalsId)
+                    && (
+                        string.IsNullOrEmpty(parameters.Search)
+                        || p.Name.ToLower().Contains(parameters.Search.ToLower())
+                    )
             )
         {
             AddInclude(p => p.Breed!.Animal!);
@@ -23,6 +27,7 @@ namespace Core.Specifications
             // 5 * (1 - 1) = 0, so we skip 0 at first page
             // 5 * (2 - 1) = 5 - we skip 5 objects
             ApplyPaging(parameters.PageSize * (parameters.PageIndex - 1), parameters.PageSize);
+            ConfigureOrderBy(parameters.Sort, pet => pet.Price);
         }
     }
 }

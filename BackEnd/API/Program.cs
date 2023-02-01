@@ -1,4 +1,5 @@
 using API.Mapper;
+using Core.Entities;
 using Core.Interfaces;
 using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
@@ -19,7 +20,6 @@ internal class Program
         ConfigureServices(ref services, in builder);
 
         var app = builder.Build();
-        CreateDatabase(app);
 
         if (app.Environment.IsDevelopment())
         {
@@ -28,6 +28,10 @@ internal class Program
         }
 
         app.UseHttpsRedirection();
+        app.UseRouting();
+        //To display images
+        app.UseStaticFiles();
+        app.UseCors("CorsPolicy");
 
         app.UseAuthorization();
 
@@ -55,13 +59,14 @@ internal class Program
             typeof(ProductMapProfile),
             typeof(BreedMapProfile)
         );
+
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
         string? ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<ShelterContext>(
-            dbcontextOptions =>
-                dbcontextOptions.UseSqlite(
+            dbContextOptions =>
+                dbContextOptions.UseSqlite(
                     ConnectionString,
                     b => b.MigrationsAssembly("Infrastructure")
                 )
@@ -69,14 +74,5 @@ internal class Program
 
         services.AddScoped<IShelterRepository, ShelterRepository>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
-    }
-
-    private static void CreateDatabase(WebApplication app)
-    {
-        using (var scope = app.Services.CreateAsyncScope())
-        {
-            var services = scope.ServiceProvider;
-            var context = services.GetRequiredService<ShelterContext>();
-        }
     }
 }

@@ -228,8 +228,8 @@ namespace Infrastructure.Data.Migraions
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("Price")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("Price")
+                        .HasColumnType("REAL");
 
                     b.HasKey("Id");
 
@@ -248,8 +248,8 @@ namespace Infrastructure.Data.Migraions
                             Gender = "female",
                             HasVaccines = true,
                             Name = "Lucy",
-                            PictureUrl = "1",
-                            Price = 2000m
+                            PictureUrl = "images/pets/whiteCat.jpg",
+                            Price = 2000.0
                         },
                         new
                         {
@@ -261,8 +261,8 @@ namespace Infrastructure.Data.Migraions
                             Gender = "male",
                             HasVaccines = false,
                             Name = "Snowflake",
-                            PictureUrl = "2",
-                            Price = 5000m
+                            PictureUrl = "images/pets/blackCat.jpg",
+                            Price = 5000.0
                         },
                         new
                         {
@@ -274,8 +274,8 @@ namespace Infrastructure.Data.Migraions
                             Gender = "male",
                             HasVaccines = true,
                             Name = "Bobby",
-                            PictureUrl = "3",
-                            Price = 1500m
+                            PictureUrl = "images/pets/orangeCat.jpg",
+                            Price = 1500.0
                         },
                         new
                         {
@@ -287,8 +287,8 @@ namespace Infrastructure.Data.Migraions
                             Gender = "male",
                             HasVaccines = true,
                             Name = "Shelton",
-                            PictureUrl = "4",
-                            Price = 500m
+                            PictureUrl = "images/pets/blackDog.jpg",
+                            Price = 500.0
                         },
                         new
                         {
@@ -300,8 +300,8 @@ namespace Infrastructure.Data.Migraions
                             Gender = "female",
                             HasVaccines = false,
                             Name = "Tess",
-                            PictureUrl = "5",
-                            Price = 200m
+                            PictureUrl = "images/pets/whiteDog.jpg",
+                            Price = 200.0
                         },
                         new
                         {
@@ -313,8 +313,8 @@ namespace Infrastructure.Data.Migraions
                             Gender = "female",
                             HasVaccines = false,
                             Name = "Carina",
-                            PictureUrl = "6",
-                            Price = 2400m
+                            PictureUrl = "images/pets/yellowDog.jpg",
+                            Price = 2400.0
                         },
                         new
                         {
@@ -326,8 +326,8 @@ namespace Infrastructure.Data.Migraions
                             Gender = "male",
                             HasVaccines = true,
                             Name = "Wendell",
-                            PictureUrl = "7",
-                            Price = 7000m
+                            PictureUrl = "images/pets/yellowParrot.jpg",
+                            Price = 7000.0
                         },
                         new
                         {
@@ -339,8 +339,8 @@ namespace Infrastructure.Data.Migraions
                             Gender = "female",
                             HasVaccines = true,
                             Name = "Dianna",
-                            PictureUrl = "8",
-                            Price = 6500m
+                            PictureUrl = "images/pets/whiteParrot.jpg",
+                            Price = 6500.0
                         },
                         new
                         {
@@ -352,8 +352,8 @@ namespace Infrastructure.Data.Migraions
                             Gender = "female",
                             HasVaccines = false,
                             Name = "Kendra",
-                            PictureUrl = "9",
-                            Price = 3000m
+                            PictureUrl = "images/pets/orangeParrot.jpg",
+                            Price = 3000.0
                         },
                         new
                         {
@@ -364,8 +364,8 @@ namespace Infrastructure.Data.Migraions
                             Description = "Fish description",
                             Gender = "female",
                             Name = "Delia",
-                            PictureUrl = "10",
-                            Price = 300m
+                            PictureUrl = "images/pets/yellowFish.jpg",
+                            Price = 300.0
                         },
                         new
                         {
@@ -376,8 +376,8 @@ namespace Infrastructure.Data.Migraions
                             Description = "Fish description",
                             Gender = "male",
                             Name = "Bennie",
-                            PictureUrl = "11",
-                            Price = 500m
+                            PictureUrl = "images/pets/blackFish.jpg",
+                            Price = 500.0
                         },
                         new
                         {
@@ -388,8 +388,8 @@ namespace Infrastructure.Data.Migraions
                             Description = "Fish description",
                             Gender = "female",
                             Name = "Delia",
-                            PictureUrl = "12",
-                            Price = 1000m
+                            PictureUrl = "images/pets/blackFish2.jpg",
+                            Price = 1000.0
                         });
                 });
 
@@ -402,6 +402,10 @@ namespace Infrastructure.Data.Migraions
                     b.Property<int>("BrandId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<string>("PictureUrl")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.Property<string>("ProductDescription")
                         .HasColumnType("TEXT");
 
@@ -409,8 +413,8 @@ namespace Infrastructure.Data.Migraions
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("ProductPrice")
-                        .HasColumnType("TEXT");
+                    b.Property<double>("ProductPrice")
+                        .HasColumnType("REAL");
 
                     b.Property<int>("ProductQuantity")
                         .HasColumnType("INTEGER");
@@ -431,9 +435,10 @@ namespace Infrastructure.Data.Migraions
                         {
                             Id = 1,
                             BrandId = 1,
+                            PictureUrl = "images/products/dogFood.jpg",
                             ProductDescription = "Food for dogs",
                             ProductName = "Healthy Dog Food",
-                            ProductPrice = 120m,
+                            ProductPrice = 120.0,
                             ProductQuantity = 100,
                             ProductTypeId = 1
                         },
@@ -441,9 +446,10 @@ namespace Infrastructure.Data.Migraions
                         {
                             Id = 2,
                             BrandId = 2,
+                            PictureUrl = "images/products/colorfulBall.jpg",
                             ProductDescription = "A toy for cats and dogs",
                             ProductName = "Colorful Ball",
-                            ProductPrice = 100m,
+                            ProductPrice = 100.0,
                             ProductQuantity = 50,
                             ProductTypeId = 4
                         },
@@ -451,9 +457,10 @@ namespace Infrastructure.Data.Migraions
                         {
                             Id = 3,
                             BrandId = 3,
+                            PictureUrl = "images/products/wormaKill.jpg",
                             ProductDescription = "A medicine for cats and dogs",
                             ProductName = "WormaKill",
-                            ProductPrice = 500m,
+                            ProductPrice = 500.99000000000001,
                             ProductQuantity = 150,
                             ProductTypeId = 3
                         },
@@ -461,9 +468,10 @@ namespace Infrastructure.Data.Migraions
                         {
                             Id = 4,
                             BrandId = 4,
+                            PictureUrl = "images/products/woodenHouse.jpg",
                             ProductDescription = "A wooden house for a parrot cage",
                             ProductName = "Wooden house",
-                            ProductPrice = 1000m,
+                            ProductPrice = 1000.0,
                             ProductQuantity = 15,
                             ProductTypeId = 2
                         },
@@ -471,9 +479,10 @@ namespace Infrastructure.Data.Migraions
                         {
                             Id = 5,
                             BrandId = 2,
+                            PictureUrl = "images/products/fishTank.jpg",
                             ProductDescription = "A fish tank for 100 lites",
                             ProductName = "Fish Tank",
-                            ProductPrice = 5000m,
+                            ProductPrice = 4999.9899999999998,
                             ProductQuantity = 8,
                             ProductTypeId = 2
                         },
@@ -481,9 +490,10 @@ namespace Infrastructure.Data.Migraions
                         {
                             Id = 6,
                             BrandId = 1,
+                            PictureUrl = "images/products/dryFood.jpg",
                             ProductDescription = "A dry food for both cats and dogs",
                             ProductName = "Dry food",
-                            ProductPrice = 200m,
+                            ProductPrice = 200.0,
                             ProductQuantity = 500,
                             ProductTypeId = 1
                         });

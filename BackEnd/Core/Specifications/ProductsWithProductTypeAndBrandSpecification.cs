@@ -19,10 +19,15 @@ namespace Core.Specifications
                         parameters.ProductTypeId == null
                         || p.ProductTypeId == parameters.ProductTypeId
                     )
+                    && (
+                        string.IsNullOrEmpty(parameters.Search)
+                        || p.ProductName.ToLower().Contains(parameters.Search.ToLower())
+                    )
             )
         {
             AddInclude(p => p.Brand!);
             AddInclude(p => p.ProductType!);
+            ConfigureOrderBy(parameters.Sort, product => product.ProductPrice);
             ApplyPaging(parameters.PageSize * (parameters.PageIndex - 1), parameters.PageSize);
         }
     }

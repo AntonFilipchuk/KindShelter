@@ -8,6 +8,9 @@ namespace Core.Specifications
         public BaseSpecification()
         {
             Criteria = (t) => false;
+            //Check it
+            OrderBy = (t) => false;
+            OrderByDescending = (t) => false;
         }
 
         public BaseSpecification(Expression<Func<T, bool>> criteria)
@@ -25,6 +28,39 @@ namespace Core.Specifications
         public int Skip { get; private set; }
 
         public bool IsPagingEnabled { get; private set; }
+
+        public Expression<Func<T, object>> OrderBy { get; private set; }
+
+        public Expression<Func<T, object>> OrderByDescending { get; private set; }
+
+        protected void ConfigureOrderBy(string? sort, Expression<Func<T, object>> orderExpression)
+        {
+            if (!string.IsNullOrEmpty(sort))
+            {
+                switch (sort)
+                {
+                    case "priceAsc":
+                        AddOrderBy(orderExpression);
+                        break;
+                    case "priceDsc":
+                        AddOrderByDescending(orderExpression);
+                        break;
+                    default:
+                        AddOrderBy(orderExpression);
+                        break;
+                }
+            }
+        }
+
+        protected void AddOrderBy(Expression<Func<T, object>> orderByExpression)
+        {
+            OrderBy = orderByExpression;
+        }
+
+        protected void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
+        {
+            OrderByDescending = orderByDescendingExpression;
+        }
 
         protected void ApplyPaging(int skip, int take)
         {

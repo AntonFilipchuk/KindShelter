@@ -3,7 +3,7 @@ namespace Core.Entities
     public record Pet : BaseEntity
     {
         public required string Name { get; init; }
-        public decimal Price { get; set; }
+        public decimal Price { get; init; }
         public required string PictureUrl { get; init; }
         public required int Age { get; init; }
         public required string Gender { get; init; }

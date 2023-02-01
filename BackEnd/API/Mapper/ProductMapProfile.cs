@@ -1,4 +1,5 @@
-﻿using API.ReturnObjects.DTOs;
+﻿using API.Mapper.UrlResolvers;
+using API.ReturnObjects.DTOs;
 using AutoMapper;
 using Core.Entities;
 
@@ -9,12 +10,18 @@ namespace API.Mapper
         public ProductMapProfile()
         {
             CreateMap<Product, ProductDTO>()
-                .ForMember
-                (productDTO => productDTO.ProductType,
-                options => options.MapFrom(product => product.ProductType!.ProductTypeName))
-                .ForMember
-                (productDTO => productDTO.Brand,
-                options => options.MapFrom(product => product.Brand!.BrandName));
+                .ForMember(
+                    productDTO => productDTO.ProductType,
+                    options => options.MapFrom(product => product.ProductType!.ProductTypeName)
+                )
+                .ForMember(
+                    productDTO => productDTO.Brand,
+                    options => options.MapFrom(product => product.Brand!.BrandName)
+                )
+                .ForMember(
+                    productDto => productDto.PictureUrl,
+                    options => options.MapFrom<ProductUrlResolver>()
+                );
         }
     }
 }

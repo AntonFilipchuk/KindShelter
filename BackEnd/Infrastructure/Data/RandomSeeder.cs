@@ -100,7 +100,7 @@ namespace Infrastructure.Data
                         Color = "white",
                         Gender = "female",
                         Name = "Lucy",
-                        PictureUrl = "1",
+                        PictureUrl = "images/pets/whiteCat.jpg",
                         Description = "Cat description",
                         HasVaccines = true,
                         Price = 2000,
@@ -117,7 +117,7 @@ namespace Infrastructure.Data
                         Color = "black",
                         Gender = "male",
                         Name = "Snowflake",
-                        PictureUrl = "2",
+                        PictureUrl = "images/pets/blackCat.jpg",
                         Description = "Cat description",
                         HasVaccines = false,
                         Price = 5000,
@@ -134,7 +134,7 @@ namespace Infrastructure.Data
                         Color = "orange",
                         Gender = "male",
                         Name = "Bobby",
-                        PictureUrl = "3",
+                        PictureUrl = "images/pets/orangeCat.jpg",
                         Description = "Cat description",
                         HasVaccines = true,
                         Price = 1500,
@@ -153,7 +153,7 @@ namespace Infrastructure.Data
                         Color = "black",
                         Gender = "male",
                         Name = "Shelton",
-                        PictureUrl = "4",
+                        PictureUrl = "images/pets/blackDog.jpg",
                         Description = "Dog description",
                         HasVaccines = true,
                         Price = 500,
@@ -170,7 +170,7 @@ namespace Infrastructure.Data
                         Color = "white",
                         Gender = "female",
                         Name = "Tess",
-                        PictureUrl = "5",
+                        PictureUrl = "images/pets/whiteDog.jpg",
                         Description = "Dog description",
                         HasVaccines = false,
                         Price = 200,
@@ -187,7 +187,7 @@ namespace Infrastructure.Data
                         Color = "yellow",
                         Gender = "female",
                         Name = "Carina",
-                        PictureUrl = "6",
+                        PictureUrl = "images/pets/yellowDog.jpg",
                         Description = "Dog description",
                         HasVaccines = false,
                         Price = 2400,
@@ -206,7 +206,7 @@ namespace Infrastructure.Data
                         Color = "yellow",
                         Gender = "male",
                         Name = "Wendell",
-                        PictureUrl = "7",
+                        PictureUrl = "images/pets/yellowParrot.jpg",
                         Description = "Parrot description",
                         HasVaccines = true,
                         Price = 7000,
@@ -223,7 +223,7 @@ namespace Infrastructure.Data
                         Color = "white",
                         Gender = "female",
                         Name = "Dianna",
-                        PictureUrl = "8",
+                        PictureUrl = "images/pets/whiteParrot.jpg",
                         Description = "Parrot description",
                         HasVaccines = true,
                         Price = 6500,
@@ -240,7 +240,7 @@ namespace Infrastructure.Data
                         Color = "orange",
                         Gender = "female",
                         Name = "Kendra",
-                        PictureUrl = "9",
+                        PictureUrl = "images/pets/orangeParrot.jpg",
                         Description = "Parrot description",
                         HasVaccines = false,
                         Price = 3000,
@@ -258,7 +258,7 @@ namespace Infrastructure.Data
                         Color = "yellow",
                         Gender = "female",
                         Name = "Delia",
-                        PictureUrl = "10",
+                        PictureUrl = "images/pets/yellowFish.jpg",
                         Description = "Fish description",
                         HasVaccines = null,
                         Price = 300,
@@ -275,7 +275,7 @@ namespace Infrastructure.Data
                         Color = "black",
                         Gender = "male",
                         Name = "Bennie",
-                        PictureUrl = "11",
+                        PictureUrl = "images/pets/blackFish.jpg",
                         Description = "Fish description",
                         HasVaccines = null,
                         Price = 500,
@@ -292,7 +292,7 @@ namespace Infrastructure.Data
                         Color = "black",
                         Gender = "female",
                         Name = "Delia",
-                        PictureUrl = "12",
+                        PictureUrl = "images/pets/blackFish2.jpg",
                         Description = "Fish description",
                         HasVaccines = null,
                         Price = 1000,
@@ -335,10 +335,10 @@ namespace Infrastructure.Data
                         BrandId = 1,
                         ProductTypeId = 1,
                         ProductName = "Healthy Dog Food",
-                        //Animals = new List<Animal> { AnimalList[0] },
+                        PictureUrl = "images/products/dogFood.jpg",
                         ProductDescription = "Food for dogs",
                         ProductQuantity = 100,
-                        ProductPrice = 120
+                        ProductPrice = 120m
                     }
                 );
             _modelBuilder
@@ -350,10 +350,10 @@ namespace Infrastructure.Data
                         BrandId = 2,
                         ProductTypeId = 4,
                         ProductName = "Colorful Ball",
-                        //Animals = new List<Animal> { AnimalList[0], AnimalList[1] },
+                        PictureUrl = "images/products/colorfulBall.jpg",
                         ProductDescription = "A toy for cats and dogs",
                         ProductQuantity = 50,
-                        ProductPrice = 100
+                        ProductPrice = 100m
                     }
                 );
             _modelBuilder
@@ -365,10 +365,10 @@ namespace Infrastructure.Data
                         BrandId = 3,
                         ProductTypeId = 3,
                         ProductName = "WormaKill",
-                        //Animals = new List<Animal> { AnimalList[0], AnimalList[1] },
+                        PictureUrl = "images/products/wormaKill.jpg",
                         ProductDescription = "A medicine for cats and dogs",
                         ProductQuantity = 150,
-                        ProductPrice = 500
+                        ProductPrice = 500.99M
                     }
                 );
             _modelBuilder
@@ -380,7 +380,7 @@ namespace Infrastructure.Data
                         BrandId = 4,
                         ProductTypeId = 2,
                         ProductName = "Wooden house",
-                        //Animals = new List<Animal> { AnimalList[2] },
+                        PictureUrl = "images/products/woodenHouse.jpg",
                         ProductDescription = "A wooden house for a parrot cage",
                         ProductQuantity = 15,
                         ProductPrice = 1000
@@ -395,10 +395,10 @@ namespace Infrastructure.Data
                         BrandId = 2,
                         ProductTypeId = 2,
                         ProductName = "Fish Tank",
-                        //Animals = new List<Animal> { AnimalList[3] },
+                        PictureUrl = "images/products/fishTank.jpg",
                         ProductDescription = "A fish tank for 100 lites",
                         ProductQuantity = 8,
-                        ProductPrice = 5000
+                        ProductPrice = 4999.99m
                     }
                 );
             _modelBuilder
@@ -410,7 +410,7 @@ namespace Infrastructure.Data
                         BrandId = 1,
                         ProductTypeId = 1,
                         ProductName = "Dry food",
-                        //Animals = new List<Animal> { AnimalList[0],  AnimalList[1]},
+                        PictureUrl = "images/products/dryFood.jpg",
                         ProductDescription = "A dry food for both cats and dogs",
                         ProductQuantity = 500,
                         ProductPrice = 200

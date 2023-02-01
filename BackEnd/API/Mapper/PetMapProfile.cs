@@ -1,3 +1,4 @@
+using API.Mapper.UrlResolvers;
 using API.ReturnObjects.DTOs;
 using AutoMapper;
 using Core.Entities;
@@ -16,7 +17,9 @@ namespace API.Mapper
                 .ForMember(
                     petDto => petDto.Animal,
                     options => options.MapFrom(pet => pet.Breed!.Animal!.AnimalName)
-                );
+                )
+                .ForMember(petDto => petDto.PictureUrl,
+                options => options.MapFrom<PetUrlResolver>());
         }
     }
 }
