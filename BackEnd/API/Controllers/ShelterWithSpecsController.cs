@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using API.Errors;
 using API.ReturnObjects.DTOs;
 using AutoMapper;
 using Core.Entities;
@@ -31,6 +32,7 @@ namespace API.Controllers
         }
 
         [HttpGet("pets")]
+        [ProducesResponseType(typeof(Pagination<PetDTO>), StatusCodes.Status200OK)]
         public async Task<ActionResult<Pagination<PetDTO>>> GetAllPets(
             [FromQuery] PetSpecificationParameters parameters
         )
@@ -43,6 +45,7 @@ namespace API.Controllers
         }
 
         [HttpGet("pets/{id}")]
+        [ProducesResponseType(typeof(PetDTO), StatusCodes.Status200OK)]
         public async Task<ActionResult<PetDTO>> GetPetByIdAsync(int id)
         {
             var spec = new PetWithBreedAndAnimalSpecification(id);
@@ -51,6 +54,7 @@ namespace API.Controllers
         }
 
         [HttpGet("products")]
+        [ProducesResponseType(typeof(Pagination<ProductDTO>), StatusCodes.Status200OK)]
         public async Task<ActionResult<Pagination<ProductDTO>>> GetAllProducts(
             [FromQuery] ProductSpecificationParameters parameters
         )
@@ -63,6 +67,7 @@ namespace API.Controllers
         }
 
         [HttpGet("products/{id}")]
+        [ProducesResponseType(typeof(ProductDTO), StatusCodes.Status200OK)]
         public async Task<ActionResult<ProductDTO>> GetProductByIdAsync(int id)
         {
             var spec = new ProductWithProductTypeAndBrandSpecification(id);
@@ -84,7 +89,7 @@ namespace API.Controllers
         {
             if (item is null)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
 
             TOut mappedObject = _mapper.Map<TIn, TOut>(item);
@@ -103,7 +108,7 @@ namespace API.Controllers
 
             if (objectList is null || objectList.Count() == 0)
             {
-                return NotFound();
+                return NotFound(new ApiResponse(404));
             }
 
             IEnumerable<Tout> mappedCollection = _mapper.Map<IEnumerable<Tin>, IEnumerable<Tout>>(

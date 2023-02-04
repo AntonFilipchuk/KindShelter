@@ -85,7 +85,6 @@ internal class Program
         services.AddScoped<IShelterRepository, ShelterRepository>();
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
-
         //Override behavior for handling 400 errors
         //products/f -> 400 error
         services.Configure<ApiBehaviorOptions>(options =>

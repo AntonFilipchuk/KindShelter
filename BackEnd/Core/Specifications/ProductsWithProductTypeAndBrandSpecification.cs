@@ -14,7 +14,7 @@ namespace Core.Specifications
         )
             : base(
                 p =>
-                    (parameters.BrandId == null || p.BrandId == p.BrandId)
+                    (parameters.BrandId == null || p.BrandId == parameters.BrandId)
                     && (
                         parameters.ProductTypeId == null
                         || p.ProductTypeId == parameters.ProductTypeId
