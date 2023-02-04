@@ -7,6 +7,7 @@ using Infrastructure.Data;
 using Infrastructure.Data.Repositories;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using System.Net;
 using System.Text.Json.Serialization;
 
 internal class Program
@@ -73,12 +74,31 @@ internal class Program
         services.AddEndpointsApiExplorer();
         services.AddSwaggerGen();
 
-        string? ConnectionString = builder.Configuration.GetConnectionString("DefaultConnection");
+        string? https_port = builder.Configuration.GetSection("https_port").Value;
+        services.AddHttpsRedirection(options =>
+        {
+            options.RedirectStatusCode = (int)HttpStatusCode.TemporaryRedirect;
+            options.HttpsPort = Int32.Parse(https_port!);
+        });
+
+        string? connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
         services.AddDbContext<ShelterContext>(
             dbContextOptions =>
                 dbContextOptions.UseSqlite(
-                    ConnectionString,
+                    connectionString,
                     b => b.MigrationsAssembly("Infrastructure")
+                )
+        );
+
+        string? corsOrigin = builder.Configuration.GetSection("cors_Origin").Value;
+        services.AddCors(
+            options =>
+                options.AddPolicy(
+                    "CorsPolicy",
+                    policy =>
+                    {
+                        policy.AllowAnyHeader().AllowAnyMethod().WithOrigins(corsOrigin!);
+                    }
                 )
         );
 
