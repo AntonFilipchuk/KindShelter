@@ -1,0 +1,33 @@
+<div class="container-flui petCard">
+  <div class="petCardImageContainer">
+    <img
+      src="{{ pet.pictureUrl }}"
+      class="petCardImage"
+      alt="{{ pet.name }}, {{ pet.age }} y/o, {{ pet.animal }}"
+    />
+  </div>
+  <div>
+    <h2 class="petCardTitle">{{ pet.name }}</h2>
+    <p class="petCardDescription">
+      {{ pet.description }}
+    </p>
+    <div *ngIf="pet.hasVaccines; else elseBlock">
+      <span class="hasVaccines">
+        <p><small>Has vaccines</small></p></span
+      >
+    </div>
+    <ng-template #elseBlock>
+      <div>
+        <span class="hasNoVaccines"
+          ><p><small>Not vaccinated</small></p></span
+        >
+      </div>
+    </ng-template>
+    <a href="#" class="btn btn-primary align-self-start">{{
+      pet.price | currency : "RUB" : "symbol-narrow" : "1.0-2" : "ru"
+    }}</a>
+  </div>
+  <div class="petCardDate">
+    <p class ="petCardDateText">7th January 14:19</p>
+  </div>
+</div>
