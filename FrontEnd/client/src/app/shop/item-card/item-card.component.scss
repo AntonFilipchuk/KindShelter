@@ -59,3 +59,22 @@ $color-gray: rgb(230, 230, 230);
   margin-bottom: 0;
   margin-left: 0.2rem;
 }
+
+.btn-label {
+  position: relative;
+  display: inline-block;
+  margin-left: 0.1rem;
+  margin-right: 0.4rem;
+}
+
+.addToCartAndAddToFavoritesFlex {
+  display: flex;
+  flex-direction: row;
+  justify-content: start;
+  align-items: center;
+}
+
+.addToFavorite {
+  font-size: 1.5rem;
+  margin-left: 1rem;
+}

@@ -1,4 +1,4 @@
-<div class="container-flui petCard">
+<div class="container petCard">
   <div class="petCardImageContainer">
     <img
       src="{{ pet.pictureUrl }}"
@@ -23,11 +23,15 @@
         >
       </div>
     </ng-template>
-    <a href="#" class="btn btn-primary align-self-start">{{
-      pet.price | currency : "RUB" : "symbol-narrow" : "1.0-2" : "ru"
-    }}</a>
+    <div class="addToCartAndAddToFavoritesFlex">
+      <button type="button" class="btn btn-primary">
+        <span class="btn-label"><i class="fa fa-shopping-cart"></i></span>
+        {{ pet.price | currency : "RUB" : "symbol-narrow" : "1.0-2" : "ru" }}
+      </button>
+      <i class="fa fa-heart-o addToFavorite"></i>
+    </div>
   </div>
   <div class="petCardDate">
-    <p class ="petCardDateText">7th January 14:19</p>
+    <p class="petCardDateText">7th January 14:19</p>
   </div>
 </div>
