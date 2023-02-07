@@ -27,7 +27,7 @@ namespace Core.Specifications
             // 5 * (1 - 1) = 0, so we skip 0 at first page
             // 5 * (2 - 1) = 5 - we skip 5 objects
             ApplyPaging(parameters.PageSize * (parameters.PageIndex - 1), parameters.PageSize);
-            ConfigureOrderBy(parameters.Sort, pet => pet.Price, pet => pet.Name);
+            ConfigureOrderBy(parameters.Sort, pet => pet.Price, pet => pet.Breed!.Animal!.AnimalName);
         }
     }
 }

@@ -17,6 +17,10 @@
       "PackagePath": "staticwebassets\\images\\pets\\blackFish2.jpg"
     },
     {
+      "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\greenParrot.jpg",
+      "PackagePath": "staticwebassets\\images\\pets\\greenParrot.jpg"
+    },
+    {
       "Id": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\orangeCat.jpg",
       "PackagePath": "staticwebassets\\images\\pets\\orangeCat.jpg"
     },

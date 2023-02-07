@@ -12,11 +12,13 @@ import { ShopModule } from './shop/shop.module';
 //Add ru locale 
 import localeRu from '@angular/common/locales/ru';
 import { registerLocaleData } from '@angular/common';
+import { TestingComponent } from './testing/testing/testing.component';
 
 registerLocaleData(localeRu);
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    TestingComponent
   ],
   imports: [
     BrowserModule,

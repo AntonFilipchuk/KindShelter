@@ -1,6 +1,6 @@
 {
   "Version": 1,
-  "Hash": "VuCiA+ZJHCYAeFE8wmqbN59Zp/YJhcv5FHC04ZBLZjA=",
+  "Hash": "ev/dB47SMnTaaITImZXJdIJVJVnLnpzKVJ/10OuyX28=",
   "Source": "API",
   "BasePath": "_content/API",
   "Mode": "Default",
@@ -83,6 +83,23 @@
       "CopyToOutputDirectory": "Never",
       "CopyToPublishDirectory": "PreserveNewest",
       "OriginalItemSpec": "wwwroot\\images\\pets\\blackFish2.jpg"
+    },
+    {
+      "Identity": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\greenParrot.jpg",
+      "SourceId": "API",
+      "SourceType": "Discovered",
+      "ContentRoot": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\",
+      "BasePath": "_content/API",
+      "RelativePath": "images/pets/greenParrot.jpg",
+      "AssetKind": "All",
+      "AssetMode": "All",
+      "AssetRole": "Primary",
+      "RelatedAsset": "",
+      "AssetTraitName": "",
+      "AssetTraitValue": "",
+      "CopyToOutputDirectory": "Never",
+      "CopyToPublishDirectory": "PreserveNewest",
+      "OriginalItemSpec": "wwwroot\\images\\pets\\greenParrot.jpg"
     },
     {
       "Identity": "B:\\Projects\\AnimalShelter\\kindShelter\\BackEnd\\API\\wwwroot\\images\\pets\\orangeCat.jpg",

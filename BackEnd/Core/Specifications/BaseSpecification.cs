@@ -15,12 +15,13 @@ namespace Core.Specifications
         //Expression for .Where() linq method
         public Expression<Func<T, bool>>? Criteria { get; }
 
-        //Expression for loading related entities 
+        //Expression for loading related entities
         public List<Expression<Func<T, object>>> Includes { get; } =
             new List<Expression<Func<T, object>>>();
 
         //How many entities to take for pagination
         public int Take { get; private set; }
+
         //How many entities to skip for pagination
         public int Skip { get; private set; }
         public bool IsPagingEnabled { get; private set; }
@@ -29,6 +30,8 @@ namespace Core.Specifications
         public Expression<Func<T, object>>? OrderBy { get; private set; }
 
         public Expression<Func<T, object>>? OrderByDescending { get; private set; }
+
+        public Expression<Func<T, object>>? OrderByAnimal { get; private set; }
 
         protected void ConfigureOrderBy(string? sort, Expression<Func<T, object>> orderExpression)
         {
@@ -71,6 +74,10 @@ namespace Core.Specifications
                         break;
                 }
             }
+            else
+            {
+                AddOrderBy(defaultOrderExpression);
+            }
         }
 
         private void AddOrderBy(Expression<Func<T, object>> orderByExpression)
@@ -81,6 +88,11 @@ namespace Core.Specifications
         private void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
             OrderByDescending = orderByDescendingExpression;
+        }
+
+        private void AddOrderByAnimal(Expression<Func<T, object>> orderByAnimalExpression)
+        {
+            OrderByAnimal = orderByAnimalExpression;
         }
 
         protected void ApplyPaging(int skip, int take)

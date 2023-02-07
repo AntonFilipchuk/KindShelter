@@ -1,4 +1,4 @@
-<div class="container petCard">
+<div class="petCard">
   <div class="petCardImageContainer">
     <img
       src="{{ pet.pictureUrl }}"
@@ -6,7 +6,8 @@
       alt="{{ pet.name }}, {{ pet.age }} y/o, {{ pet.animal }}"
     />
   </div>
-  <div>
+
+  <div class="petCardInfo">
     <h2 class="petCardTitle">{{ pet.name }}</h2>
     <p class="petCardDescription">
       {{ pet.description }}
@@ -30,8 +31,8 @@
       </button>
       <i class="fa fa-heart-o addToFavorite"></i>
     </div>
-  </div>
-  <div class="petCardDate">
-    <p class="petCardDateText">7th January 14:19</p>
+    <div class="petCardDate">
+      <p class="petCardDateText">7th January 14:19</p>
+    </div>
   </div>
 </div>

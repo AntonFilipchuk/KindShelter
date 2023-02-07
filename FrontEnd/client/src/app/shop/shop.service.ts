@@ -14,6 +14,6 @@ export class ShopService {
   }
 
   getPets(): Observable<IPetPagination> {
-    return this.httpClient.get<IPetPagination>(this.baseUrl + 'pets')
+    return this.httpClient.get<IPetPagination>(this.baseUrl + 'pets?PageIndex=1&PageSize=15')
   }
 }

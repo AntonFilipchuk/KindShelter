@@ -298,6 +298,23 @@ namespace Infrastructure.Data
                         Price = 1000,
                     }
                 );
+            _modelBuilder
+                .Entity<Pet>()
+                .HasData(
+                    new Pet
+                    {
+                        Id = 13,
+                        Age = 4,
+                        BreedId = 3,
+                        Color = "green",
+                        Gender = "female",
+                        Name = "Marcy",
+                        PictureUrl = "images/pets/greenParrot.jpg",
+                        Description = "Parrot description Parrot description Parrot description Parrot description Parrot description Parrot description Parrot description",
+                        HasVaccines = true,
+                        Price = 2000,
+                    }
+                );
         }
 
         private void AddBrands()
