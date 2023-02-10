@@ -12,6 +12,9 @@ namespace Infrastructure.Data
         ModelBuilder _modelBuilder;
         private List<Animal> AnimalList = new();
 
+        private const string _loremIpsum =
+            "Maecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.";
+
         public RandomSeeder(ModelBuilder modelBuilder)
         {
             _modelBuilder = modelBuilder;
@@ -26,10 +29,30 @@ namespace Infrastructure.Data
 
         private void AddAnimals()
         {
-            Animal cat = new Animal { AnimalName = "Cat", Id = 1 };
-            Animal dog = new Animal { AnimalName = "Dog", Id = 2 };
-            Animal parrot = new Animal { AnimalName = "Parrot", Id = 3 };
-            Animal fish = new Animal { AnimalName = "Fish", Id = 4 };
+            Animal cat = new Animal
+            {
+                AnimalName = "Cat",
+                PluralAnimalName = "Cats",
+                Id = 1
+            };
+            Animal dog = new Animal
+            {
+                AnimalName = "Dog",
+                PluralAnimalName = "Dogs",
+                Id = 2
+            };
+            Animal parrot = new Animal
+            {
+                AnimalName = "Parrot",
+                PluralAnimalName = "Parrots",
+                Id = 3
+            };
+            Animal fish = new Animal
+            {
+                AnimalName = "Fish",
+                PluralAnimalName = "Fish",
+                Id = 4
+            };
 
             AnimalList.Add(cat);
             AnimalList.Add(dog);
@@ -101,7 +124,7 @@ namespace Infrastructure.Data
                         Gender = "female",
                         Name = "Lucy",
                         PictureUrl = "images/pets/whiteCat.jpg",
-                        Description = "Cat description",
+                        Description = "Cat description" + _loremIpsum,
                         HasVaccines = true,
                         Price = 2000,
                     }
@@ -118,7 +141,7 @@ namespace Infrastructure.Data
                         Gender = "male",
                         Name = "Snowflake",
                         PictureUrl = "images/pets/blackCat.jpg",
-                        Description = "Cat description",
+                        Description = "Cat description" + _loremIpsum,
                         HasVaccines = false,
                         Price = 5000,
                     }
@@ -135,7 +158,7 @@ namespace Infrastructure.Data
                         Gender = "male",
                         Name = "Bobby",
                         PictureUrl = "images/pets/orangeCat.jpg",
-                        Description = "Cat description",
+                        Description = "Cat description" + _loremIpsum,
                         HasVaccines = true,
                         Price = 1500,
                     }
@@ -154,7 +177,7 @@ namespace Infrastructure.Data
                         Gender = "male",
                         Name = "Shelton",
                         PictureUrl = "images/pets/blackDog.jpg",
-                        Description = "Dog description",
+                        Description = "Dog description" + _loremIpsum,
                         HasVaccines = true,
                         Price = 500,
                     }
@@ -171,7 +194,7 @@ namespace Infrastructure.Data
                         Gender = "female",
                         Name = "Tess",
                         PictureUrl = "images/pets/whiteDog.jpg",
-                        Description = "Dog description",
+                        Description = "Dog description" + _loremIpsum,
                         HasVaccines = false,
                         Price = 200,
                     }
@@ -188,7 +211,7 @@ namespace Infrastructure.Data
                         Gender = "female",
                         Name = "Carina",
                         PictureUrl = "images/pets/yellowDog.jpg",
-                        Description = "Dog description",
+                        Description = "Dog description" + _loremIpsum,
                         HasVaccines = false,
                         Price = 2400,
                     }
@@ -207,7 +230,7 @@ namespace Infrastructure.Data
                         Gender = "male",
                         Name = "Wendell",
                         PictureUrl = "images/pets/yellowParrot.jpg",
-                        Description = "Parrot description",
+                        Description = "Parrot description" + _loremIpsum,
                         HasVaccines = true,
                         Price = 7000,
                     }
@@ -224,7 +247,7 @@ namespace Infrastructure.Data
                         Gender = "female",
                         Name = "Dianna",
                         PictureUrl = "images/pets/whiteParrot.jpg",
-                        Description = "Parrot description",
+                        Description = "Parrot description" + _loremIpsum,
                         HasVaccines = true,
                         Price = 6500,
                     }
@@ -241,7 +264,7 @@ namespace Infrastructure.Data
                         Gender = "female",
                         Name = "Kendra",
                         PictureUrl = "images/pets/orangeParrot.jpg",
-                        Description = "Parrot description",
+                        Description = "Parrot description" + _loremIpsum,
                         HasVaccines = false,
                         Price = 3000,
                     }
@@ -259,7 +282,7 @@ namespace Infrastructure.Data
                         Gender = "female",
                         Name = "Delia",
                         PictureUrl = "images/pets/yellowFish.jpg",
-                        Description = "Fish description",
+                        Description = "Fish description" + _loremIpsum,
                         HasVaccines = null,
                         Price = 300,
                     }
@@ -276,7 +299,7 @@ namespace Infrastructure.Data
                         Gender = "male",
                         Name = "Bennie",
                         PictureUrl = "images/pets/blackFish.jpg",
-                        Description = "Fish description",
+                        Description = "Fish description" + _loremIpsum,
                         HasVaccines = null,
                         Price = 500,
                     }
@@ -293,7 +316,7 @@ namespace Infrastructure.Data
                         Gender = "female",
                         Name = "Delia",
                         PictureUrl = "images/pets/blackFish2.jpg",
-                        Description = "Fish description",
+                        Description = "Fish description" + _loremIpsum,
                         HasVaccines = null,
                         Price = 1000,
                     }
@@ -310,7 +333,7 @@ namespace Infrastructure.Data
                         Gender = "female",
                         Name = "Marcy",
                         PictureUrl = "images/pets/greenParrot.jpg",
-                        Description = "Parrot description Parrot description Parrot description Parrot description Parrot description Parrot description Parrot description",
+                        Description = "Parrot description" + _loremIpsum,
                         HasVaccines = true,
                         Price = 2000,
                     }

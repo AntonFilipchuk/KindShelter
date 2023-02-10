@@ -18,16 +18,19 @@ namespace API.Controllers
     {
         private readonly IGenericRepository<Pet> _petRepository;
         private readonly IGenericRepository<Product> _productRepository;
+        private readonly IGenericRepository<Animal> _animalRepository;
         private IMapper _mapper;
 
         public ShelterWithSpecsController(
             IGenericRepository<Pet> petRepository,
             IGenericRepository<Product> productRepository,
+            IGenericRepository<Animal> animalRepository,
             IMapper mapper
         )
         {
             _petRepository = petRepository;
             _productRepository = productRepository;
+            _animalRepository = animalRepository;
             _mapper = mapper;
         }
 
@@ -41,7 +44,15 @@ namespace API.Controllers
             DataForPagination<Pet> petsData =
                 await _petRepository.GetEntitiesBySpecForPaginationAsync(spec);
 
-            return ReturnMappedCollection<Pet, PetDTO>(petsData, parameters);
+            return GetMappedCollectionForPagination<Pet, PetDTO>(petsData, parameters);
+        }
+
+        [HttpGet("animals")]
+        public async Task<ActionResult<IEnumerable<AnimalDTO>>> GetAllAnimals()
+        {
+            IEnumerable<Animal> animals = await _animalRepository.GetEntities();
+
+            return GetMappedCollection<Animal, AnimalDTO>(animals);
         }
 
         [HttpGet("pets/{id}")]
@@ -49,8 +60,8 @@ namespace API.Controllers
         public async Task<ActionResult<PetDTO>> GetPetByIdAsync(int id)
         {
             var spec = new PetWithBreedAndAnimalSpecification(id);
-            Pet? pet = await _petRepository.GetEntityBySpec(spec);
-            return ReturnMappedObject<Pet, PetDTO>(pet);
+            Pet? pet = await _petRepository.GetEntityBySpecAsync(spec);
+            return GetMappedObject<Pet, PetDTO>(pet);
         }
 
         [HttpGet("products")]
@@ -63,7 +74,7 @@ namespace API.Controllers
             DataForPagination<Product> productsData =
                 await _productRepository.GetEntitiesBySpecForPaginationAsync(spec);
 
-            return ReturnMappedCollection<Product, ProductDTO>(productsData, parameters);
+            return GetMappedCollectionForPagination<Product, ProductDTO>(productsData, parameters);
         }
 
         [HttpGet("products/{id}")]
@@ -71,8 +82,8 @@ namespace API.Controllers
         public async Task<ActionResult<ProductDTO>> GetProductByIdAsync(int id)
         {
             var spec = new ProductWithProductTypeAndBrandSpecification(id);
-            Product? product = await _productRepository.GetEntityBySpec(spec);
-            return ReturnMappedObject<Product, ProductDTO>(product);
+            Product? product = await _productRepository.GetEntityBySpecAsync(spec);
+            return GetMappedObject<Product, ProductDTO>(product);
         }
 
         // [HttpPost]
@@ -83,7 +94,7 @@ namespace API.Controllers
         //     await _productRepository.AddEntity()
         // }
 
-        private ActionResult<TOut> ReturnMappedObject<TIn, TOut>(in TIn? item)
+        private ActionResult<TOut> GetMappedObject<TIn, TOut>(in TIn? item)
             where TIn : BaseEntity
             where TOut : BaseDTO
         {
@@ -96,15 +107,15 @@ namespace API.Controllers
             return Ok(mappedObject);
         }
 
-        private ActionResult<Pagination<Tout>> ReturnMappedCollection<Tin, Tout>(
-            in DataForPagination<Tin> data,
+        private ActionResult<Pagination<Tout>> GetMappedCollectionForPagination<Tin, Tout>(
+            in DataForPagination<Tin> dataForPagination,
             in IParameters parameters
         )
             where Tin : BaseEntity
             where Tout : BaseDTO
         {
-            IEnumerable<Tin>? objectList = data.ObjectList;
-            int numberOfObjects = data.NumberOfObjectsInDB;
+            IEnumerable<Tin>? objectList = dataForPagination.ObjectList;
+            int numberOfObjects = dataForPagination.NumberOfObjectsInDB;
 
             if (objectList is null || objectList.Count() == 0)
             {
@@ -123,6 +134,24 @@ namespace API.Controllers
                     mappedCollection
                 )
             );
+        }
+
+        private ActionResult<IEnumerable<Tout>> GetMappedCollection<Tin, Tout>(
+            IEnumerable<Tin> collectionToMap
+        )
+            where Tin : BaseEntity
+            where Tout : BaseDTO
+        {
+            if (collectionToMap.Count() == 0)
+            {
+                return NotFound(new ApiResponse(404));
+            }
+
+            IEnumerable<Tout> mappedCollection = _mapper.Map<IEnumerable<Tin>, IEnumerable<Tout>>(
+                collectionToMap
+            );
+
+            return Ok(mappedCollection);
         }
     }
 }

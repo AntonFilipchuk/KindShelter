@@ -10,7 +10,7 @@
   <div class="petCardInfo">
     <h2 class="petCardTitle">{{ pet.name }}</h2>
     <p class="petCardDescription">
-      {{ pet.description }}
+      {{ pet.description | slice:0:150 }}
     </p>
     <div *ngIf="pet.hasVaccines; else elseBlock">
       <span class="hasVaccines">

@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace Infrastructure.Data.Migraions
 {
     [DbContext(typeof(ShelterContext))]
-    [Migration("20230201105900_InitialCreate")]
+    [Migration("20230210095415_InitialCreate")]
     partial class InitialCreate
     {
         /// <inheritdoc />
@@ -30,6 +30,10 @@ namespace Infrastructure.Data.Migraions
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<string>("PluralAnimalName")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
                     b.HasKey("Id");
 
                     b.ToTable("Animals");
@@ -38,22 +42,26 @@ namespace Infrastructure.Data.Migraions
                         new
                         {
                             Id = 1,
-                            AnimalName = "Cat"
+                            AnimalName = "Cat",
+                            PluralAnimalName = "Cats"
                         },
                         new
                         {
                             Id = 2,
-                            AnimalName = "Dog"
+                            AnimalName = "Dog",
+                            PluralAnimalName = "Dogs"
                         },
                         new
                         {
                             Id = 3,
-                            AnimalName = "Parrot"
+                            AnimalName = "Parrot",
+                            PluralAnimalName = "Parrots"
                         },
                         new
                         {
                             Id = 4,
-                            AnimalName = "Fish"
+                            AnimalName = "Fish",
+                            PluralAnimalName = "Fish"
                         });
                 });
 
@@ -247,7 +255,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 1,
                             BreedId = 1,
                             Color = "white",
-                            Description = "Cat description",
+                            Description = "Cat descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "female",
                             HasVaccines = true,
                             Name = "Lucy",
@@ -260,7 +268,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 3,
                             BreedId = 1,
                             Color = "black",
-                            Description = "Cat description",
+                            Description = "Cat descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "male",
                             HasVaccines = false,
                             Name = "Snowflake",
@@ -273,7 +281,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 5,
                             BreedId = 1,
                             Color = "orange",
-                            Description = "Cat description",
+                            Description = "Cat descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "male",
                             HasVaccines = true,
                             Name = "Bobby",
@@ -286,7 +294,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 2,
                             BreedId = 2,
                             Color = "black",
-                            Description = "Dog description",
+                            Description = "Dog descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "male",
                             HasVaccines = true,
                             Name = "Shelton",
@@ -299,7 +307,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 1,
                             BreedId = 2,
                             Color = "white",
-                            Description = "Dog description",
+                            Description = "Dog descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "female",
                             HasVaccines = false,
                             Name = "Tess",
@@ -312,7 +320,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 3,
                             BreedId = 2,
                             Color = "yellow",
-                            Description = "Dog description",
+                            Description = "Dog descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "female",
                             HasVaccines = false,
                             Name = "Carina",
@@ -325,7 +333,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 3,
                             BreedId = 3,
                             Color = "yellow",
-                            Description = "Parrot description",
+                            Description = "Parrot descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "male",
                             HasVaccines = true,
                             Name = "Wendell",
@@ -338,7 +346,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 6,
                             BreedId = 3,
                             Color = "white",
-                            Description = "Parrot description",
+                            Description = "Parrot descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "female",
                             HasVaccines = true,
                             Name = "Dianna",
@@ -351,7 +359,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 7,
                             BreedId = 3,
                             Color = "orange",
-                            Description = "Parrot description",
+                            Description = "Parrot descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "female",
                             HasVaccines = false,
                             Name = "Kendra",
@@ -364,7 +372,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 1,
                             BreedId = 4,
                             Color = "yellow",
-                            Description = "Fish description",
+                            Description = "Fish descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "female",
                             Name = "Delia",
                             PictureUrl = "images/pets/yellowFish.jpg",
@@ -376,7 +384,7 @@ namespace Infrastructure.Data.Migraions
                             Age = 2,
                             BreedId = 4,
                             Color = "black",
-                            Description = "Fish description",
+                            Description = "Fish descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "male",
                             Name = "Bennie",
                             PictureUrl = "images/pets/blackFish.jpg",
@@ -388,11 +396,24 @@ namespace Infrastructure.Data.Migraions
                             Age = 1,
                             BreedId = 4,
                             Color = "black",
-                            Description = "Fish description",
+                            Description = "Fish descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
                             Gender = "female",
                             Name = "Delia",
                             PictureUrl = "images/pets/blackFish2.jpg",
                             Price = 1000.0
+                        },
+                        new
+                        {
+                            Id = 13,
+                            Age = 4,
+                            BreedId = 3,
+                            Color = "green",
+                            Description = "Parrot descriptionMaecenas fermentum tellus mauris. Vestibulum egestas euismod lorem, in euismod quam pharetra at. Integer sollicitudin tellus lectus, in semper dui molestie ac. Donec placerat, elit non sollicitudin tempus, justo elit condimentum neque, id porta tellus ligula at nunc. In semper, risus et sodales interdum, quam metus eleifend turpis, eget condimentum nunc sem sit amet mauris. Integer volutpat pulvinar sem, eu tempus dolor vehicula in. Etiam pharetra faucibus neque ac pulvinar. Proin iaculis pharetra purus eu auctor. Proin nec tristique sem. Curabitur turpis libero, vestibulum et semper vitae, fermentum sed orci. Aliquam lectus sapien, varius nec nisi eget, convallis rutrum mauris. Suspendisse hendrerit pellentesque risus vel auctor. Pellentesque sed feugiat odio, et bibendum odio.",
+                            Gender = "female",
+                            HasVaccines = true,
+                            Name = "Marcy",
+                            PictureUrl = "images/pets/greenParrot.jpg",
+                            Price = 2000.0
                         });
                 });
 

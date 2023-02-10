@@ -3,6 +3,7 @@ namespace Core.Entities
     public record Animal : BaseEntity
     {
         public required string AnimalName { get; init; }
+        public required string PluralAnimalName {get; init;}
         public IEnumerable<Breed>? Breeds { get; init; }
 
         public IEnumerable<Product>? Products { get; set; }

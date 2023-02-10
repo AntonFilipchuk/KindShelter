@@ -68,7 +68,8 @@ internal class Program
         services.AddAutoMapper(
             typeof(PetMapProfile),
             typeof(ProductMapProfile),
-            typeof(BreedMapProfile)
+            typeof(BreedMapProfile),
+            typeof(AnimalMapProfile)
         );
 
         services.AddEndpointsApiExplorer();
@@ -106,7 +107,7 @@ internal class Program
         services.AddScoped(typeof(IGenericRepository<>), typeof(GenericRepository<>));
 
         //Override behavior for handling 400 errors
-        //products/f -> 400 error
+        //api/products/f -> 400 error
         services.Configure<ApiBehaviorOptions>(options =>
         {
             options.InvalidModelStateResponseFactory = actionContext =>

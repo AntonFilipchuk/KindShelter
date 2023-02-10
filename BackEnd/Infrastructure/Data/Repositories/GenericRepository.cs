@@ -18,6 +18,11 @@ namespace Infrastructure.Data.Repositories
             _context = context;
         }
 
+        public async Task<IEnumerable<T>> GetEntities()
+        {
+            return await _context.Set<T>().ToListAsync();
+        }
+
         public async Task<DataForPagination<T>> GetEntitiesBySpecForPaginationAsync(
             ISpecification<T> specification
         )
@@ -30,7 +35,7 @@ namespace Infrastructure.Data.Repositories
             );
         }
 
-        public async Task<T?> GetEntityBySpec(ISpecification<T> specification)
+        public async Task<T?> GetEntityBySpecAsync(ISpecification<T> specification)
         {
             QueryWithAdditionalDataAfterSpecification<T> queryWithAdditionalData =
                 ApplySpecification(specification);
