@@ -23,8 +23,12 @@ namespace Core.Specifications.Parameters
         public int? BreedId { get; set; }
         public int? AnimalsId { get; set; }
 
+        //Sort by vaccines
+        public bool? VaccinationStatus {get; set;}
+    
+
         //Type of sorting (asc/desc)
-        public string? Sort {get; set;}
+        public string? Sort { get; set; }
 
         //For searching by string
         private string? _search;

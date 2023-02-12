@@ -15,6 +15,10 @@ namespace Core.Specifications
                         string.IsNullOrEmpty(parameters.Search)
                         || p.Name.ToLower().Contains(parameters.Search.ToLower())
                     )
+                    && (
+                        parameters.VaccinationStatus == null
+                        || p.HasVaccines == parameters.VaccinationStatus
+                    )
             )
         {
             AddInclude(p => p.Breed!.Animal!);
@@ -27,7 +31,26 @@ namespace Core.Specifications
             // 5 * (1 - 1) = 0, so we skip 0 at first page
             // 5 * (2 - 1) = 5 - we skip 5 objects
             ApplyPaging(parameters.PageSize * (parameters.PageIndex - 1), parameters.PageSize);
-            ConfigureOrderBy(parameters.Sort, pet => pet.Price, pet => pet.Breed!.Animal!.AnimalName);
+            ConfigureOrderBy(parameters.Sort);
+        }
+
+        private void ConfigureOrderBy(string? sort)
+        {
+            Expression<Func<Pet, object>> mainExpression = pet => pet.Price;
+            Expression<Func<Pet, object>> defaultExpression = pet => pet.Breed!.Animal!.AnimalName;
+            
+            switch (sort)
+            {
+                case "priceAsc":
+                    AddOrderBy(mainExpression);
+                    break;
+                case "priceDsc":
+                    AddOrderByDescending(mainExpression);
+                    break;
+                default:
+                    AddOrderBy(defaultExpression);
+                    break;
+            }
         }
     }
 }

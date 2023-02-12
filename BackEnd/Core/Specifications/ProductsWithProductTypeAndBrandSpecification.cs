@@ -27,8 +27,8 @@ namespace Core.Specifications
         {
             AddInclude(p => p.Brand!);
             AddInclude(p => p.ProductType!);
-            ConfigureOrderBy(parameters.Sort, product => product.ProductPrice);
             ApplyPaging(parameters.PageSize * (parameters.PageIndex - 1), parameters.PageSize);
+            //TODO: Configure orderby
         }
     }
 }

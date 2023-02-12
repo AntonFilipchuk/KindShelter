@@ -31,69 +31,69 @@ namespace Core.Specifications
 
         public Expression<Func<T, object>>? OrderByDescending { get; private set; }
 
-        public Expression<Func<T, object>>? OrderByAnimal { get; private set; }
+       // public Expression<Func<T, object>>? OrderByAnimal { get; private set; }
 
-        protected void ConfigureOrderBy(string? sort, Expression<Func<T, object>> orderExpression)
-        {
-            if (!string.IsNullOrEmpty(sort))
-            {
-                switch (sort)
-                {
-                    case "priceAsc":
-                        AddOrderBy(orderExpression);
-                        break;
-                    case "priceDsc":
-                        AddOrderByDescending(orderExpression);
-                        break;
-                    default:
-                        AddOrderBy(orderExpression);
-                        break;
-                }
-            }
-        }
+        // protected void ConfigureOrderBy(string? sort, Expression<Func<T, object>> orderExpression)
+        // {
+        //     if (!string.IsNullOrEmpty(sort))
+        //     {
+        //         switch (sort)
+        //         {
+        //             case "priceAsc":
+        //                 AddOrderBy(orderExpression);
+        //                 break;
+        //             case "priceDsc":
+        //                 AddOrderByDescending(orderExpression);
+        //                 break;
+        //             default:
+        //                 AddOrderBy(orderExpression);
+        //                 break;
+        //         }
+        //     }
+        // }
 
-        //Overloaded version to specify a default sorting
-        protected void ConfigureOrderBy(
-            string? sort,
-            Expression<Func<T, object>> mainOrderExpression,
-            Expression<Func<T, object>> defaultOrderExpression
-        )
-        {
-            if (!string.IsNullOrEmpty(sort))
-            {
-                switch (sort)
-                {
-                    case "priceAsc":
-                        AddOrderBy(mainOrderExpression);
-                        break;
-                    case "priceDsc":
-                        AddOrderByDescending(mainOrderExpression);
-                        break;
-                    default:
-                        AddOrderBy(defaultOrderExpression);
-                        break;
-                }
-            }
-            else
-            {
-                AddOrderBy(defaultOrderExpression);
-            }
-        }
+        // //Overloaded version to specify a default sorting
+        // protected void ConfigureOrderBy(
+        //     string? sort,
+        //     Expression<Func<T, object>> mainOrderExpression,
+        //     Expression<Func<T, object>> defaultOrderExpression
+        // )
+        // {
+        //     if (!string.IsNullOrEmpty(sort))
+        //     {
+        //         switch (sort)
+        //         {
+        //             case "priceAsc":
+        //                 AddOrderBy(mainOrderExpression);
+        //                 break;
+        //             case "priceDsc":
+        //                 AddOrderByDescending(mainOrderExpression);
+        //                 break;
+        //             default:
+        //                 AddOrderBy(defaultOrderExpression);
+        //                 break;
+        //         }
+        //     }
+        //     else
+        //     {
+        //         AddOrderBy(defaultOrderExpression);
+        //     }
+        // }
 
-        private void AddOrderBy(Expression<Func<T, object>> orderByExpression)
+        public void AddOrderBy(Expression<Func<T, object>> orderByExpression)
         {
             OrderBy = orderByExpression;
         }
 
-        private void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
+        public void AddOrderByDescending(Expression<Func<T, object>> orderByDescendingExpression)
         {
             OrderByDescending = orderByDescendingExpression;
         }
 
-        private void AddOrderByAnimal(Expression<Func<T, object>> orderByAnimalExpression)
-        {
-            OrderByAnimal = orderByAnimalExpression;
-        }
+        // private void AddOrderByAnimal(Expression<Func<T, object>> orderByAnimalExpression)
+        // {
+        //     OrderByAnimal = orderByAnimalExpression;
+        // }
 
         protected void ApplyPaging(int skip, int take)
         {

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { IPetPagination } from '../shared/models/IPetPagination';
-import { Observable, map } from 'rxjs';
+import { Observable, map, tap } from 'rxjs';
 import { IAnimal } from '../shared/models/IAnimal';
 import { PetRequestParams } from '../shared/models/PetRequestParams';
 
@@ -17,23 +17,37 @@ export class ShopService {
 
   getPets(petRequestParams: PetRequestParams): Observable<IPetPagination | null> {
     let httpParams = new HttpParams();
+    let x = undefined;
     if (petRequestParams.animalsId && petRequestParams.animalsId > 0) {
       httpParams = httpParams.append('animalsId', petRequestParams.animalsId.toString());
     }
 
+    if (petRequestParams.sort) {
+      httpParams = httpParams.append('sort', petRequestParams.sort!);
+    }
+
+    if (petRequestParams.search) {
+      httpParams = httpParams.append('search', petRequestParams.search);
+    }
+
+    if (petRequestParams.vaccinationStatus)
+    {
+      httpParams = httpParams.append('vaccinationStatus', petRequestParams.vaccinationStatus);
+    }
+
     //Get HttpResponse of type IPetPagination 
-    let response : Observable<HttpResponse<IPetPagination>> = 
-    this.httpClient.get<IPetPagination>(this.baseUrl + 'pets',
-      {
-        //Observe body using params
-        observe: 'response', params: httpParams
-      });
+    let response: Observable<HttpResponse<IPetPagination>> =
+      this.httpClient.get<IPetPagination>(this.baseUrl + 'pets',
+        {
+          //Observe body using params
+          observe: 'response', params: httpParams
+        });
     //Using Rxjs map() method through pipe() get a body of http response
     return response.pipe(
-        map(response => {
-          return response.body;
-        })
-      );
+      map(response => {
+        return response.body;
+      })
+    );
   }
 
   getAnimals(): Observable<IAnimal[]> {
