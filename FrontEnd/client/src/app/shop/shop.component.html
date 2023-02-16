@@ -2,61 +2,67 @@
   <div class="row mt-5">
     <!--Left part 3 cols-->
     <div class="col-md-3">
+      <!--Searching-->
+      <h5 class="mb-1 flex">Search</h5>
+      <input
+        class="form-control"
+        type="text"
+        (keyup.enter)="onSearch()"
+        #search
+        placeholder="Search"
+        maxlength="20"
+      />
+      <!--Page size-->
+      <h5 class="mb-1 flex">Page size</h5>
+      <div class="d-flex flex-row justify-content-start">
+        <input
+          #pageSize
+          class="form-control me-1"
+          type="number"
+          (keyup.enter)="onPageSizeChange(pageSize.valueAsNumber)"
+          placeholder="12"
+          value="12"
+          maxlength="2"
+          min="1"
+          max="50"
+        />
+        <button
+          class="btn btn-primary"
+          type="button"
+          (click)="onPageSizeChange(pageSize.valueAsNumber)"
+        >
+          Apply
+        </button>
+      </div>
       <!--Sorting options-->
       <h5 class="m-0">Sort options</h5>
-      <select class="mt-2 mb-2" (change)="onSortSelected($event)">
+      <select
+        class="mt-2 mb-2 form-select"
+        (change)="onSortOptionSelected($event)"
+      >
         <option
           *ngFor="let sortOption of sortOptions"
           [value]="sortOption.value"
         >
-          {{ sortOption.name }}
+          {{ sortOption.option }}
         </option>
       </select>
-      <!--Searching-->
-      <input type="text" (keyup.enter)="onSearch()" #search />
       <!--Vaccinated-->
-      <div>
-        <h5>Vaccines</h5>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault1"
-            checked
-          />
-          <label class="form-check-label" for="flexRadioDefault1">
-            All
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
-            
-          />
-          <label class="form-check-label" for="flexRadioDefault2">
-            Vaccinated
-          </label>
-        </div>
-        <div class="form-check">
-          <input
-            class="form-check-input"
-            type="radio"
-            name="flexRadioDefault"
-            id="flexRadioDefault2"
-           
-          />
-          <label class="form-check-label" for="flexRadioDefault2">
-            Not vaccinated
-          </label>
-        </div>
-      </div>
+      <h5 class="m-0">Vaccination status</h5>
+      <select
+        class="mt-2 mb-2 form-select"
+        (change)="onVaccinatedOptionSelected($event)"
+      >
+        <option
+          *ngFor="let vaccinatedOption of vaccinatedOptions"
+          [value]="vaccinatedOption.value"
+        >
+          {{ vaccinatedOption.option }}
+        </option>
+      </select>
       <!--Sorting by animal type-->
-      <h5 class="m-0">Animals</h5>
-      <ul class="list-group mt-3">
+      <h5 class="mb-2">Animals</h5>
+      <ul class="list-group mt-3 mb-3">
         <li
           class="list-group-item"
           *ngFor="let animal of animals"
@@ -76,6 +82,12 @@
     </div>
     <!--If any information for pets-->
     <div class="col-md-9" *ngIf="pets">
+      <app-paging-header
+        [pageIndex]="petRequestParams.pageIndex"
+        [pageSize]="petRequestParams.pageSize"
+        [totalCount]="totalCount"
+      >
+      </app-paging-header>
       <div class="row justify-content-start">
         <div
           class="col-md-6 col-lg-6 col-xl-4 mb-2 justify-content-center main-container"
@@ -84,6 +96,16 @@
           <app-item-card [pet]="pet"></app-item-card>
         </div>
       </div>
+      <!--Bottom Pager-->
+      <!--Check the pager html component-->
+      <!--Set totalItems and pageSize variables in pager.component.ts-->
+      <!--Also listen to numberOfSelectedPageEmitter; here event is a pageNumber : number-->
+      <app-pager
+        [totalItems]="totalCount"
+        [pageSize]="petRequestParams.pageSize"
+        (numberOfSelectedPageEmitter)="onSelectedPageChange($event)"
+      >
+      </app-pager>
     </div>
   </div>
 </div>

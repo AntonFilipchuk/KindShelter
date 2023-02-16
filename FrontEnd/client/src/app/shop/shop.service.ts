@@ -17,22 +17,26 @@ export class ShopService {
 
   getPets(petRequestParams: PetRequestParams): Observable<IPetPagination | null> {
     let httpParams = new HttpParams();
-    let x = undefined;
+
     if (petRequestParams.animalsId && petRequestParams.animalsId > 0) {
       httpParams = httpParams.append('animalsId', petRequestParams.animalsId.toString());
     }
 
     if (petRequestParams.sort) {
-      httpParams = httpParams.append('sort', petRequestParams.sort!);
+      httpParams = httpParams.append('sort', petRequestParams.sort);
     }
 
     if (petRequestParams.search) {
       httpParams = httpParams.append('search', petRequestParams.search);
     }
 
-    if (petRequestParams.vaccinationStatus)
-    {
+    if (petRequestParams.vaccinationStatus !== undefined) {
       httpParams = httpParams.append('vaccinationStatus', petRequestParams.vaccinationStatus);
+    }
+
+    if (petRequestParams.pageIndex && petRequestParams.pageSize) {
+      httpParams = httpParams.append('pageIndex', petRequestParams.pageIndex.toString());
+      httpParams = httpParams.append('pageSize', petRequestParams.pageSize.toString());
     }
 
     //Get HttpResponse of type IPetPagination 

@@ -1,4 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 import { IPet } from '../shared/models/IPet';
 import { ShopService } from './shop.service';
@@ -15,7 +15,7 @@ import { HttpErrorResponse } from '@angular/common/http';
 export class ShopComponent implements OnInit {
 
   //Use temple reference variable in select HTML component #search
-  @ViewChild('search', { static: false }) searchCondition: ElementRef | undefined;
+  @ViewChild('search', { static: false }) searchCondition: ElementRef | undefined;;
 
   pets: IPet[] | undefined;
 
@@ -26,14 +26,18 @@ export class ShopComponent implements OnInit {
   ifVaccinated: boolean = false;
 
   sortOptions = [
-    { name: 'Default', value: '' },
-    { name: 'Price: low to high', value: 'priceAsc' },
-    { name: 'Price: high to low', value: 'priceDsc' }
+    { option: 'Animal type', value: '' },
+    { option: 'Price: low to high', value: 'priceAsc' },
+    { option: 'Price: high to low', value: 'priceDsc' }
   ]
 
-  test = [
-    { name: "Test", testProperty: true }
+  vaccinatedOptions = [
+    { option: 'All', value: '' },
+    { option: 'Vaccinated', value: true },
+    { option: 'Not vaccinated', value: false }
   ]
+
+  totalCount: number = 0;
 
   constructor(private shopService: ShopService) { }
 
@@ -45,7 +49,12 @@ export class ShopComponent implements OnInit {
   private getPets() {
     this.shopService.getPets(this.petRequestParams).subscribe(
       {
-        next: (response: IPetPagination | null) => this.pets = response?.data,
+        next: (response: IPetPagination | null) => {
+          this.pets = response?.data;
+          this.petRequestParams.pageIndex = response?.pageIndex ?? 1;
+          this.petRequestParams.pageSize = response?.pageSize ?? 12;
+          this.totalCount = response?.count ?? this.totalCount;
+        },
         error: (e: HttpErrorResponse) => {
           if (e.status === 404) {
             this.pets = undefined;
@@ -74,7 +83,7 @@ export class ShopComponent implements OnInit {
     this.getPets();
   }
 
-  public onSortSelected($event: Event) {
+  public onSortOptionSelected($event: Event) {
     //When option is selected html element emits $event that contains
     //information about html element itself
     //so to get the value of an element 
@@ -100,13 +109,34 @@ export class ShopComponent implements OnInit {
 
     //Get the value of temple reference variable
     this.petRequestParams.search = this.searchCondition.nativeElement.value;
+    this.petRequestParams.pageIndex = 1;
     this.getPets();
   }
 
-  public onVaccinatedSelected()
-  {
-    this.ifVaccinated = !this.ifVaccinated;
-    this.petRequestParams.vaccinationStatus = this.ifVaccinated;
-    this.getPets(); 
+  public onVaccinatedOptionSelected($event: Event) {
+    const vaccinationOptionValue = ($event.target as HTMLInputElement).value;
+    if (vaccinationOptionValue === "true") {
+      this.petRequestParams.vaccinationStatus = true;
+    }
+    else if (vaccinationOptionValue == "false") {
+      this.petRequestParams.vaccinationStatus = false;
+    }
+    else {
+      this.petRequestParams.vaccinationStatus = undefined;
+    }
+    this.petRequestParams.pageIndex = 1;
+    this.getPets();
+  }
+
+  public onPageSizeChange(pageSize: number) {
+    if (pageSize >= 1 && pageSize <= 50) {
+      this.petRequestParams.pageSize = pageSize;
+      this.getPets();
+    }
+  }
+
+  public onSelectedPageChange(selectedPageNumber: number) {
+    this.petRequestParams.pageIndex = selectedPageNumber;
+    this.getPets();
   }
 }

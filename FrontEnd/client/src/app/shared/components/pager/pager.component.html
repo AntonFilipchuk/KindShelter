@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-xs-12 col-12">
+    <!--We need to pass total number of items (totalItems) and items per page (itemsPerPage)-->
+    <!--We will automatically get number of pages -- totalItems / itemsPerPage-->
+    <!--Also emit a number of page that was selected-->
+    <pagination
+      [totalItems]="totalItems"
+      [itemsPerPage]="pageSize"
+      (pageChanged)="pageChanged($event)"
+    ></pagination>
+  </div>
+</div>

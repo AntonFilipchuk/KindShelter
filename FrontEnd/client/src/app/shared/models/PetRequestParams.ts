@@ -1,6 +1,6 @@
 export class PetRequestParams {
     pageIndex: number = 1;
-    pageSize: number = 15;
+    pageSize: number = 3;
     breedId?: number = undefined;
     animalsId?: number = undefined;
     sort?: string = undefined;
