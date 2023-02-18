@@ -1,12 +1,37 @@
-<div class="row">
-  <div class="col-xs-12 col-12">
-    <!--We need to pass total number of items (totalItems) and items per page (itemsPerPage)-->
-    <!--We will automatically get number of pages -- totalItems / itemsPerPage-->
-    <!--Also emit a number of page that was selected-->
-    <pagination
-      [totalItems]="totalItems"
-      [itemsPerPage]="pageSize"
-      (pageChanged)="pageChanged($event)"
-    ></pagination>
+<ul class="pagination">
+  <!--Previous-->
+  <li
+    [ngClass]="[currentPage === 1 ? 'page-item disabled' : 'page-item']"
+    (click)="
+      currentPage > 1 && (currentPage = currentPage - 1);
+      selectedPageNumber(currentPage)
+    "
+  >
+    <a class="page-link" href="#" tabindex="-1" aria-disabled="true"
+      >Previous</a
+    >
+  </li>
+
+  <!--Pages-->
+  <div *ngFor="let page of [].constructor(numberOfPages); let i = index">
+    <li
+      [ngClass]="[i + 1 === currentPage ? 'page-item active' : 'page-item']"
+      (click)="selectedPageNumber(i + 1)"
+    >
+      <a class="page-link" href="#">{{ i + 1 }}</a>
+    </li>
   </div>
-</div>
+
+  <!--Next-->
+  <li
+    [ngClass]="[
+      currentPage === numberOfPages ? 'page-item disabled' : 'page-item'
+    ]"
+    (click)="
+      currentPage < numberOfPages && (currentPage = currentPage + 1);
+      selectedPageNumber(currentPage)
+    "
+  >
+    <a class="page-link" href="#">Next</a>
+  </li>
+</ul>

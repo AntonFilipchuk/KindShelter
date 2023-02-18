@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, OnChanges, OnInit, Output, SimpleChanges } from '@angular/core';
 import { PageChangedEvent } from 'ngx-bootstrap/pagination';
 
 @Component({
@@ -6,17 +6,25 @@ import { PageChangedEvent } from 'ngx-bootstrap/pagination';
   templateUrl: './pager.component.html',
   styleUrls: ['./pager.component.scss']
 })
-export class PagerComponent {
+export class PagerComponent implements OnChanges {
 
-  //Pager component comes from ngx-bootstrap
-  @Input() totalItems!: number;
+  @Input() numberOfPages: number = 1;
+  //Page index from requestParams
+  @Input() pageIndex: number = 1;
 
-  @Input() pageSize!: number;
+  @Output() selectedPageNumberEmitter = new EventEmitter<number>();
 
-  @Output() numberOfSelectedPageEmitter = new EventEmitter<number>();
+  currentPage: number = 1;
 
-  pageChanged(event: PageChangedEvent): void {
-    this.numberOfSelectedPageEmitter.emit(event.page)
+  ngOnChanges(changes: SimpleChanges): void {
+    //Every time when we have any changes set page to 1
+    this.currentPage = this.pageIndex; 
   }
 
+  selectedPageNumber(selectedPageNumber: number): void {
+    if (selectedPageNumber < this.numberOfPages + 1 && selectedPageNumber > 0) {
+      this.currentPage = selectedPageNumber;
+      this.selectedPageNumberEmitter.emit(selectedPageNumber);
+    }
+  }
 }

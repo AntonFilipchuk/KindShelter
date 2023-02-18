@@ -6,6 +6,7 @@ import { IPetPagination } from '../shared/models/IPetPagination';
 import { IAnimal } from '../shared/models/IAnimal';
 import { PetRequestParams } from '../shared/models/PetRequestParams';
 import { HttpErrorResponse } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-shop',
@@ -135,8 +136,13 @@ export class ShopComponent implements OnInit {
     }
   }
 
-  public onSelectedPageChange(selectedPageNumber: number) {
+  public onSelectedPageChangeTest(selectedPageNumber: number) {
     this.petRequestParams.pageIndex = selectedPageNumber;
     this.getPets();
+  }
+
+  public numberOfPages(): number {
+    let nOfPages: number = Math.ceil(this.totalCount / this.petRequestParams.pageSize);
+    return nOfPages;
   }
 }

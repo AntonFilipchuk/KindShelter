@@ -101,9 +101,9 @@
       <!--Set totalItems and pageSize variables in pager.component.ts-->
       <!--Also listen to numberOfSelectedPageEmitter; here event is a pageNumber : number-->
       <app-pager
-        [totalItems]="totalCount"
-        [pageSize]="petRequestParams.pageSize"
-        (numberOfSelectedPageEmitter)="onSelectedPageChange($event)"
+        (selectedPageNumberEmitter)="onSelectedPageChangeTest($event)"
+        [numberOfPages]="numberOfPages()"
+        [pageIndex] = "petRequestParams.pageIndex"
       >
       </app-pager>
     </div>
